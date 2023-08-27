@@ -1,0 +1,328 @@
+[{
+  "_id": {
+    "$oid": "64e33da30dd9c6a7b3a6c289"
+  },
+  "name": "Sách Thạch",
+  "year_creation": {
+    "$date": "2023-08-23T00:00:00.000Z"
+  },
+  "description": "Một ngày đẹp trời ở Việt Nam",
+  "content": "Nước Việt Nam quốc hiệu là Cộng hòa xã hội chủ nghĩa Việt Nam là một quốc gia nằm ở cực Đông của bán đảo Đông Dương thuộc khu vực Đông Nam Á giáp với Lào",
+  "total": 14,
+  "stock": 19,
+  "createdAt": {
+    "$date": "2023-08-21T10:34:11.983Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-23T17:33:32.851Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e47f90ce2f7b6563cc2515"
+  },
+  "name": "Tiểu thuyết Trung Hoa",
+  "year_creation": {
+    "$date": "2023-08-24T00:00:00.000Z"
+  },
+  "description": "có tranh ảnh",
+  "content": "nội dung rất hay",
+  "total": 15,
+  "stock": 22,
+  "createdAt": {
+    "$date": "2023-08-22T09:27:44.055Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-24T14:30:10.632Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e809397333e64155fa122c"
+  },
+  "name": "Nấu ăn ngon mỗi ngày",
+  "year_creation": {
+    "$date": "2023-08-26T00:00:00.000Z"
+  },
+  "description": "Mô tả công thức hướng dẫn nấu các món ăn ngon hàng ngày món ăn theo từng nguyên liệu và các ngày lễ tết dịp nấu thực đơn món ngon mỗi ngày Tom Yum Kung Pancake ",
+  "content": "Nội dung công thức hướng dẫn nấu các món ăn ngon hàng ngày món ăn theo từng nguyên liệu và các ngày lễ tết dịp nấu thực đơn món ngon mỗi ngày Tom Yum Kung Pancake ",
+  "total": 9,
+  "stock": 6,
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T01:51:53.792Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:15:47.567Z"
+  },
+  "__v": 0,
+  "category_id": {
+    "$oid": "64eb769454877dc7a9190b8d"
+  }
+},
+{
+  "_id": {
+    "$oid": "64e809bf7333e64155fa1232"
+  },
+  "name": "Non sông Việt Nam",
+  "year_creation": {
+    "$date": "2023-08-09T00:00:00.000Z"
+  },
+  "description": "Một ngày đẹp trời ở Việt Nam",
+  "content": "Nước Việt Nam quốc hiệu là Cộng hòa xã hội chủ nghĩa Việt Nam là một quốc gia nằm ở cực Đông của bán đảo Đông Dương thuộc khu vực Đông Nam Á giáp với Lào",
+  "total": 5,
+  "stock": 6,
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T01:54:07.256Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T15:34:31.040Z"
+  },
+  "__v": 0,
+  "category_id": {
+    "$oid": "64e2e6222740a1f1a51e19a5"
+  }
+},
+{
+  "_id": {
+    "$oid": "64e80a797333e64155fa1236"
+  },
+  "name": "Đắc Nhân Tâm",
+  "year_creation": {
+    "$date": "2023-08-22T00:00:00.000Z"
+  },
+  "description": "một trong những quyển sách hay nên đọc ở mọi thời đại",
+  "content": "Nội dung chính chủ yếu xoay quanh cậu bé chăn cừu không có định hướng cho tương lai của mình",
+  "total": 11,
+  "stock": 12,
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T01:57:13.948Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:16:29.476Z"
+  },
+  "__v": 0,
+  "category_id": {
+    "$oid": "64eb76d554877dc7a9190b98"
+  }
+},
+{
+  "_id": {
+    "$oid": "64e80ad27333e64155fa123a"
+  },
+  "name": "Cuốn theo chiều gió",
+  "year_creation": {
+    "$date": "2023-08-15T00:00:00.000Z"
+  },
+  "description": "Cuốn sách mang đến cho các bạn trẻ sức lôi cuốn mãnh liệt bởi tình yêu đặc sắc",
+  "content": " Chúng như một điểm tựa an toàn cho con người vực dậy tinh thần",
+  "total": 986,
+  "stock": 885,
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T01:58:42.641Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:46:04.552Z"
+  },
+  "__v": 0,
+  "category_id": {
+    "$oid": "64eb6cea54877dc7a9190a86"
+  }
+},
+{
+  "_id": {
+    "$oid": "64e81ca6a6d9b5d50133ebeb"
+  },
+  "name": "Chiếc lược ngà",
+  "year_creation": {
+    "$date": "2023-08-08T00:00:00.000Z"
+  },
+  "description": "mt Chiếc lược ngà",
+  "content": "nd Chiếc lược ngà",
+  "total": 53,
+  "stock": 43,
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T03:14:46.311Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:51:25.251Z"
+  },
+  "__v": 0,
+  "category_id": {
+    "$oid": "64eb6cea54877dc7a9190a86"
+  }
+},
+{
+  "_id": {
+    "$oid": "64ea406cd460a390e143d44d"
+  },
+  "name": "Người cùng khổ",
+  "year_creation": {
+    "$date": "2023-08-07T00:00:00.000Z"
+  },
+  "description": "mt Người cùng khổ",
+  "content": "nd Người cùng khổ",
+  "total": 343,
+  "stock": 4343,
+  "category_id": {
+    "$oid": "64eb6cea54877dc7a9190a86"
+  },
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-26T18:11:56.080Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:51:04.955Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eac3321aed02a2820cfb89"
+  },
+  "name": "Bài tập Hóa",
+  "year_creation": {
+    "$date": "2023-08-09T00:00:00.000Z"
+  },
+  "description": "mt Bài tập Hóa",
+  "content": "nd Bài tập Hóa",
+  "total": 34,
+  "stock": 43,
+  "category_id": {
+    "$oid": "64e2e6412740a1f1a51e19a7"
+  },
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-27T03:29:54.799Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:51:59.842Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eac3821aed02a2820cfb93"
+  },
+  "name": "Bánh đa cua",
+  "year_creation": {
+    "$date": "2023-08-16T00:00:00.000Z"
+  },
+  "description": "mt Bánh đa cua",
+  "content": "nd Bánh đa cua",
+  "total": 89,
+  "stock": 98,
+  "category_id": {
+    "$oid": "64eb769454877dc7a9190b8d"
+  },
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-27T03:31:14.938Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:50:51.370Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eac4631aed02a2820cfb9d"
+  },
+  "name": "Bánh mì đen",
+  "year_creation": {
+    "$date": "2023-08-15T00:00:00.000Z"
+  },
+  "description": "mt Bánh mì đen",
+  "content": "nd Bánh mì đen",
+  "total": 454,
+  "stock": 5345,
+  "category_id": {
+    "$oid": "64eb769454877dc7a9190b8d"
+  },
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-27T03:34:59.884Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:49:51.799Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eb1e292d86e919ea2bda6c"
+  },
+  "name": "Phong sách 3",
+  "year_creation": {
+    "$date": "2023-08-31T00:00:00.000Z"
+  },
+  "description": "mt Phong sách 3",
+  "content": "nd Phong sách 3",
+  "total": 345,
+  "stock": 456,
+  "category_id": {
+    "$oid": "64eac43f1aed02a2820cfb98"
+  },
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-27T09:58:01.654Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:50:32.784Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eb572c87f2de1ee589ff09"
+  },
+  "name": "were cheaper",
+  "year_creation": {
+    "$date": "2023-08-03T00:00:00.000Z"
+  },
+  "description": "djkfgds",
+  "content": "sdfnds",
+  "total": 43434,
+  "stock": 3434,
+  "category_id": {
+    "$oid": "64e2e6222740a1f1a51e19a5"
+  },
+  "deleted": true,
+  "createdAt": {
+    "$date": "2023-08-27T14:01:16.539Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T14:48:13.822Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eb698454877dc7a9190a54"
+  },
+  "name": "sach toi 27",
+  "year_creation": {
+    "$date": "2023-08-01T00:00:00.000Z"
+  },
+  "description": "mt sach toi 27",
+  "content": "nd sach toi 27",
+  "total": 54,
+  "stock": 43,
+  "category_id": {
+    "$oid": "64e2e6412740a1f1a51e19a7"
+  },
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-27T15:19:32.460Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T15:19:32.460Z"
+  },
+  "__v": 0
+}]

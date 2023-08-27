@@ -1,0 +1,162 @@
+[{
+  "_id": {
+    "$oid": "64e32ecd1b6b4e4b9eff4698"
+  },
+  "name": "sach covittt",
+  "date_of_birth": {
+    "$date": "2023-08-23T00:00:00.000Z"
+  },
+  "story": "Tieu su 11",
+  "createdAt": {
+    "$date": "2023-08-21T09:30:53.618Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T01:40:20.122Z"
+  },
+  "__v": 0,
+  "deleted": true
+},
+{
+  "_id": {
+    "$oid": "64e804663179c5de5e822b71"
+  },
+  "name": "Huynh Cong Den",
+  "date_of_birth": {
+    "$date": "2023-08-03T00:00:00.000Z"
+  },
+  "story": "Trong chuyên đề này nội dung chủ yếu trình bày kiến thức liên quan đến kỹ thuật lập trình Nếu bạn đã từng học qua một ngôn ngữ lập trình nào đó như Pascal",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T01:31:18.987Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T01:33:39.001Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e805b056e35768d3a9a9bf"
+  },
+  "name": "Tran Dinh Binh",
+  "date_of_birth": {
+    "$date": "2023-08-02T00:00:00.000Z"
+  },
+  "story": "Trong chuyên đề này nội dung chủ yếu trình bày kiến thức liên quan đến kỹ thuật lập trình Nếu bạn đã từng học qua một ngôn ngữ lập trình nào đó như Pascal",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T01:36:48.039Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T01:36:48.039Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e805cb56e35768d3a9a9c3"
+  },
+  "name": "Bui Tuan Dat",
+  "date_of_birth": {
+    "$date": "2023-08-23T00:00:00.000Z"
+  },
+  "story": "Trong chuyên đề này nội dung chủ yếu trình bày kiến thức liên quan đến kỹ thuật lập trình Nếu bạn đã từng học qua một ngôn ngữ lập trình nào đó như Pascal",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T01:37:15.337Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T01:37:15.337Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e8060156e35768d3a9a9c7"
+  },
+  "name": "duc hoang",
+  "date_of_birth": {
+    "$date": "2023-08-24T00:00:00.000Z"
+  },
+  "story": "Trong chuyên đề này nội dung chủ yếu trình bày kiến thức liên quan đến kỹ thuật lập trình Nếu bạn đã từng học qua một ngôn ngữ lập trình nào đó như Pascal",
+  "deleted": true,
+  "createdAt": {
+    "$date": "2023-08-25T01:38:09.941Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T01:40:14.860Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e8063456e35768d3a9a9cc"
+  },
+  "name": "Vu Hai Minh",
+  "date_of_birth": {
+    "$date": "2023-08-15T00:00:00.000Z"
+  },
+  "story": "Trong chuyên đề này nội dung chủ yếu trình bày kiến thức liên quan đến kỹ thuật lập trình Nếu bạn đã từng học qua một ngôn ngữ lập trình nào đó như Pascal",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T01:39:00.726Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T01:39:00.726Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e81861e4abd5cab48dab7c"
+  },
+  "name": "Doan Bao Lam",
+  "date_of_birth": {
+    "$date": "2023-08-10T00:00:00.000Z"
+  },
+  "story": "một trong những quyển sách hay nên đọc ở mọi thời đại",
+  "deleted": true,
+  "createdAt": {
+    "$date": "2023-08-25T02:56:33.218Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T02:57:27.299Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e819982b7ff061cb3aaced"
+  },
+  "name": "were cheaper",
+  "date_of_birth": {
+    "$date": "2023-08-10T00:00:00.000Z"
+  },
+  "story": "Tôi có đoạn mã viết bằng nodejs express như sau,",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T03:01:44.694Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T03:01:44.694Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e819d82b7ff061cb3aacf5"
+  },
+  "name": "were cheaper 222",
+  "date_of_birth": {
+    "$date": "2023-08-16T00:00:00.000Z"
+  },
+  "story": "Sách ?Đắc Nhân Tâm” được xuất bản lần đầu tiên vào năm 1937, do tác giả Dale biên soạn. Ông là một nhà ngoại giao, ",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T03:02:48.529Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T03:04:04.129Z"
+  },
+  "__v": 0
+}]

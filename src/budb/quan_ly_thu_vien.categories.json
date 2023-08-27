@@ -1,0 +1,84 @@
+[{
+  "_id": {
+    "$oid": "64e2e6222740a1f1a51e19a5"
+  },
+  "name": "Sách giáo khoa",
+  "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry12",
+  "createdAt": {
+    "$date": "2023-08-21T04:20:50.815Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-21T04:20:50.815Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e2e6412740a1f1a51e19a7"
+  },
+  "name": "Sách bài tập",
+  "description": "Sách bài tập Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+  "createdAt": {
+    "$date": "2023-08-21T04:21:21.056Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-21T04:21:21.056Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eac43f1aed02a2820cfb98"
+  },
+  "name": "Sách của phong",
+  "description": "Sach cua phong rat hay",
+  "createdAt": {
+    "$date": "2023-08-27T03:34:23.147Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T03:34:23.147Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eb6cea54877dc7a9190a86"
+  },
+  "name": "Sách Văn học",
+  "description": "Sách Văn học rat hay",
+  "createdAt": {
+    "$date": "2023-08-27T15:34:02.750Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T15:34:02.750Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eb769454877dc7a9190b8d"
+  },
+  "name": "Sách Nấu ăn",
+  "description": "Sách Nấu ăn rất hay",
+  "createdAt": {
+    "$date": "2023-08-27T16:15:16.152Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:15:16.152Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64eb76d554877dc7a9190b98"
+  },
+  "name": "Sách Giải trí",
+  "description": "Sách Giải trí rất hay",
+  "createdAt": {
+    "$date": "2023-08-27T16:16:21.012Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-27T16:16:21.012Z"
+  },
+  "__v": 0
+}]

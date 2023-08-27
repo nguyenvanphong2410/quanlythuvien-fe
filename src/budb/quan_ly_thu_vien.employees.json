@@ -1,0 +1,238 @@
+[{
+  "_id": {
+    "$oid": "64e7952c432b32c34b69e614"
+  },
+  "name": "Nguyen Van Phong",
+  "email": "phong@gmail.com",
+  "password": "$2b$10$cd00By83iiXYkQT2D0r0Ie4.iW9BN8CCBTsLRB0W961wlvNepdsZi",
+  "phone": "0362800771",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-24T17:36:44.839Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-24T17:36:44.839Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e79534432b32c34b69e618"
+  },
+  "name": "Bui Tuan Dat",
+  "email": "dat@gmail.com",
+  "password": "$2b$10$yBclBw5I02NWZZhFPS3A1emX5Fk3U7s8IiRqqI8cQlakLgMU9FVfu",
+  "phone": "123456789",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-24T17:36:52.014Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-24T17:36:52.014Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e7953d432b32c34b69e61c"
+  },
+  "name": "Vu Hai Minh",
+  "email": "minh@gmail.com",
+  "password": "$2b$10$HkvNjWlSgE7mmk/1bplZu./VwIqg3.0odkUP26kAFCOrtC69TOrdy",
+  "phone": "98955664",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-24T17:37:01.355Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-24T17:37:01.355Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e79556432b32c34b69e620"
+  },
+  "name": "Nguyen Duc Hoang",
+  "email": "hoang@gmail.com",
+  "password": "$2b$10$9YEfh0cZclBtwdRVdxN4GePWeBkpxNIjdAsrGvRxq/ITOfUnJ3vyK",
+  "phone": "0947837356",
+  "deleted": true,
+  "createdAt": {
+    "$date": "2023-08-24T17:37:26.233Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-24T17:38:17.662Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e7956f432b32c34b69e624"
+  },
+  "name": "Doan Bao Lam",
+  "email": "lam@gmail.com",
+  "password": "$2b$10$OMsENsGK8amvnvLpL1s1GOjjgibcSxSCnw/MIcoTSWUrbU3NH2bIO",
+  "phone": "0963728745",
+  "deleted": true,
+  "createdAt": {
+    "$date": "2023-08-24T17:37:51.072Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-24T17:38:15.644Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e7ff969ab5249ec4e22e22"
+  },
+  "name": "Dinh Thy",
+  "email": "thy@gmail.com",
+  "password": "$2b$10$jBVssoiRcYVw52siVjgajuXo/7BFRcjNiqh2DbXLFDF9yA/EIEaHW",
+  "phone": "094394853",
+  "deleted": true,
+  "createdAt": {
+    "$date": "2023-08-25T01:10:46.771Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T01:12:30.468Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e80ea9c9c610c44a023ec6"
+  },
+  "name": "phong",
+  "email": "phon@gmail.com",
+  "password": "$2b$10$YNcaI.Kq/LnuNUzyY.cZDONBJNgYp/2gLn.W44ziv3UYRr.OMavlq",
+  "phone": "0377092166",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T02:15:05.143Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T02:15:05.143Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e8105e5df8e582366ae143"
+  },
+  "name": "nguyen tuan",
+  "email": "tuan@gmail.com",
+  "password": "$2b$10$DXA72DbeCA0NRUfDeyOhn.gEFVDbfmKRc/fV3PupV16YivN7.8ADu",
+  "phone": "077665544",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T02:22:22.741Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T02:22:22.741Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e810d54e91694a5f800f5c"
+  },
+  "name": "Quoc Vuong",
+  "email": "vuong@gmail.com",
+  "password": "$2b$10$7S99o/DVehBte13WbOywQufyw9mGT4z7.5zKthNdP0xDuXtvAV9Va",
+  "phone": "022334455",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T02:24:21.782Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T02:24:21.782Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e812b967c0e96ebf415339"
+  },
+  "name": "phong",
+  "email": "hello@gmail.com",
+  "password": "$2b$10$7KcSEJicTL8GnQZ6nponpuzOEdaRycADFCFPxtNRIzDuhQKzQQ.Vm",
+  "phone": "037708984",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T02:32:25.070Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T02:32:25.070Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e8137313c87a376b511558"
+  },
+  "name": "phong",
+  "email": "hello1@gmail.com",
+  "password": "$2b$10$UERWSIsxipFnu./omcfJv.idc7/rMjlA5U9uPXGqXrJtsymYdDHhW",
+  "phone": "037708569",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T02:35:31.479Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T02:35:31.479Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e814f413c87a376b51155c"
+  },
+  "name": "nvt",
+  "email": "t@gmail.com",
+  "password": "$2b$10$Z2tOp6FOHc/7NOBjv0g4cORFl9brPQleWekndqc.GZlYNSYgpWMEy",
+  "phone": "1234567890",
+  "deleted": true,
+  "createdAt": {
+    "$date": "2023-08-25T02:41:56.564Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T03:37:42.461Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e81651faf71cd00777704c"
+  },
+  "name": "nvb",
+  "email": "b@gmail.com",
+  "password": "$2b$10$TV6n.zY4jIZHOzrdSUrypu9wM0OIEqyDJrRw9exEI1d59DIQOsmJa",
+  "phone": "0966756564",
+  "deleted": true,
+  "createdAt": {
+    "$date": "2023-08-25T02:47:45.782Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T03:37:40.855Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64e817bfe4abd5cab48dab74"
+  },
+  "name": "phong oi",
+  "email": "phongoi@gmail.com",
+  "password": "$2b$10$Rj.VT7b4nt2sW5rgh3ReH.gonBLIl2l1ZEdHJoY9HcGCVbWLiBSoi",
+  "phone": "0543688885",
+  "deleted": false,
+  "createdAt": {
+    "$date": "2023-08-25T02:53:51.978Z"
+  },
+  "updatedAt": {
+    "$date": "2023-08-25T03:52:38.644Z"
+  },
+  "__v": 0
+}]
