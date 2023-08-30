@@ -28,10 +28,10 @@ const TableAuthors = () => {
     const onCLickSubmit = (e) => {
         e.preventDefault();
         createAuthors(inputComment, {})
-            .then(({data}) => {
+            .then(({ data }) => {
                 setInputComment({});
                 if (data.data.status === "OK") {
-                    window.location.reload();                   
+                    window.location.reload();
                 } else if (data.data.status === "ERR") {
                     alert(data.message);
                 }
@@ -41,7 +41,7 @@ const TableAuthors = () => {
     //onCLickDelete
     const onClickDelete = (id) => {
         deleteSoftAuthor(id)
-            .then(({data}) => {
+            .then(({ data }) => {
                 if (data.status === "OK") {
                     window.location.reload();
                 } else if (data.status === "ERR") {
@@ -62,61 +62,13 @@ const TableAuthors = () => {
                 <div className="col-3">
                     <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
                         <i className="fas fa-fw fa-user-plus mr-2" />
-                        <span>Thêm mới tác giả</span>
+                        <Link style={{ textDecoration: "none" }} to="/add-author">Thêm mới tác giả</Link>
                     </a>
                 </div>
                 <div className="col-10"></div>
             </div>
 
-            <div id="collapsePages1" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <form id="form-insert" className="">
-                    <div className="row">
-                        <div className="col-lg-6 form-group">
-                            <div className="form-group">
-                                <label >Họ tên</label>
-                                <input
-                                    name="name"
-                                    type="text"
-                                    className="form-control"
-                                    id="name"
-                                    aria-describedby="name"
-                                    onChange={onChangeInput}
-                                    value={inputComment.name || ""}
-                                />
-                                <small id="emailHelp" className="form-text text-muted"> message...</small>
-                            </div>
-                        </div>
-                        <div className="col-lg-6 form-group">
-                            <div className="form-group">
-                                <label >Ngày sinh</label>
-                                <input
-                                    name="date_of_birth"
-                                    type="date"
-                                    className="form-control"
-                                    id="date_of_birth"
-                                    onChange={onChangeInput}
-                                    value={inputComment.date_of_birth || ""}
-                                />
-                            </div>
-                        </div>
-                    </div>
 
-                    <div className="form-group">
-                        <label >Tiểu sử</label>
-                        <textarea
-                            name="story"
-                            type="text"
-                            className="form-control"
-                            id="story"
-                            onChange={onChangeInput}
-                            value={inputComment.story || ""}
-                        />
-                    </div>
-                    <button onClick={onCLickSubmit} type="submit" className="btn btn-success ">Thêm</button>
-                </form>
-
-
-            </div>
             {/* End Thêm mới */}
             {/* DataTales Example */}
             <div className="card shadow mb-4 mt-4">
@@ -124,28 +76,30 @@ const TableAuthors = () => {
                     <div className="table-responsive">
 
                         {/* TableAuthors */}
-                        <table className="table table-bordered" id="dataTable" width="100%" cellSpacing={0}>
+                        <table className="table table-bordered" id="dataTable" width="100%" cellSpacing={0} >
                             <thead>
                                 <tr>
                                     <th>Họ tên tác giả</th>
                                     <th>Ngày sinh</th>
-                                    <th>Các đầu sách </th>
-                                    <th colSpan={2} >Tùy chọn</th>
+                                    {/* <th>Các đầu sách </th> */}
+                                    <th className="text-center" colSpan={2} >Tùy chọn</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     authorsData.map((item, index) =>
                                         <tr key={index}>
-                                            <td>{item.name}</td>
+                                            <td>
+                                                <Link style={{ textDecoration: "none" }} to={`/details-author/${item._id}`}>{item.name}</Link>
+                                            </td>
                                             <td>{moment(item.date_of_birth).format('DD/MM/YYYY')}</td>
-                                            <td></td>
-                                            <th>
+                                            {/* <td></td> */}
+                                            <th className="text-center">
                                                 <Link to={`/update-author/${item._id}`}>
                                                     <i id="ic-pen" className="fa fa-pen" />
                                                 </Link>
                                             </th>
-                                            <th>
+                                            <th className="text-center">
                                                 <a onClick={() => onClickDelete(item._id)} data-toggle="modal" data-target="#delete-modal">
                                                     <i id="ic-trash" className="fa fa-trash" />
                                                 </a>

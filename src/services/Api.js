@@ -4,6 +4,9 @@ import Http from "./Http";
 export const loginEmployee = (data) => {
     return Http.post("employee/login", data);
 }
+export const logoutEmployee = (data) => {
+    return Http.post("employee/logout", data);
+}
 export const getInfo = (data) => {
     return Http.post("employee/get-info", data);
 }
@@ -72,13 +75,27 @@ export const deleteSoftBook = (id) => {
 
 
 //API --- Thể loại
-export const createCategoryBooks = (data, config) => {
-    return Http.post("category/create-categories-book", data, config);
+export const createCategoryBooks = (data) => {
+    return Http.post("category/create-categories-book", data);
 }
 
 export const getAllCategoriesBook = (data) => {
     return Http.get("category/get-all-categories-book", data);
 }
+
+export const getDetailsCategory = (id) => {
+    return Http.get(`category/get-details-categories-book/${id}`);
+}
+
+export const updateCategory = (id, data) => {
+    return Http.put(`category/update-category-book/${id}`, data);
+}
+
+export const deleteSoftCategory = (id) => {
+    return Http.delete(`category/delete-categories-book/${id}`);
+}
+
+
 
 
 

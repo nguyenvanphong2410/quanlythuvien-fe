@@ -45,6 +45,14 @@ const Sidebar = () => {
 
                 </li>
 
+                 {/* Nav Item - Pages Collapse Menu */}
+                 <li className="nav-item ml-3 active" >
+                    <Link className="nav-link collapsed" to="/categories" data-toggle="" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
+                        <i className="fas fa-fw fa-folder" />
+                        <span >Thể loại</span>
+                    </Link>
+                </li>
+
                 {/* Nav Item */}
                 <li className="nav-item ml-3 active">
                     <Link className="nav-link" to="/books">
@@ -53,25 +61,7 @@ const Sidebar = () => {
                     </Link>
                 </li>
 
-                {/* Nav Item - Pages Collapse Menu */}
-                <li className="nav-item ml-3 active" >
-                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-                        <i className="fas fa-fw fa-folder" />
-                        <span >Thể loại sách</span>
-                    </a>
-                    <div id="collapsePages" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                        <div className="bg-white py-2 collapse-inner rounded">
-                            <h6 className="collapse-header">Các thể loại:</h6>
-                            {
-                                categoriesData.map((categoryItem, index) =>
-
-                                    <Link key={index} className="collapse-item" to="#">{categoryItem.name}</Link>
-                                )
-                            }
-
-                        </div>
-                    </div>
-                </li>
+               
                 {/* Divider */}
                 <hr className="sidebar-divider d-none d-md-block" />
 

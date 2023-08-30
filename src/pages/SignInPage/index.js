@@ -31,10 +31,11 @@ const Login = () => {
                     localStorage.setItem('access_token', data.data?.access_token)
 
                     //Chuyển hướng
-                    navigate('/admin');
+                    navigate('/');
                     
                 } else if (data.data.status === "ERR") {
                     alert(data.data.message)
+                    window.location.reload();
                 }
             })
 

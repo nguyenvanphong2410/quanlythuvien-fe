@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
-import HeaderAdmin from '../layouts/HeaderAdmin'
-import Sidebar from '../layouts/Sidebar'
+import React from 'react'
+import HeaderAdmin from '../../components/layouts/HeaderAdmin'
+import Sidebar from '../../components/layouts/Sidebar'
+import TableCategories from '../../components/layouts/TableCategories'
 
-const DefaultComponent = () => {
-
+const Categories = () => {
     return (
         <>
             {/* Page Wrapper */}
@@ -15,7 +15,7 @@ const DefaultComponent = () => {
                     <div id="content">
 
                         {/* Topbar */}
-                        <nav className="navbar navbar-expand navbar-light bg-dark topbar mb-3 static-top shadow">
+                        <nav className="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
                             {/* Topbar Navbar */}
                             <ul className="navbar-nav ml-auto">
                                 <HeaderAdmin />
@@ -24,15 +24,17 @@ const DefaultComponent = () => {
                         {/* End of Topbar */}
                         {/* Begin Page Content */}
                         <div className="container-fluid">
-                            <h1>Trang quản trị Quản Lí Thư Viện</h1>
+
+                        {/* ------ */}
+                        <h1>Thể loại sách</h1>
+                        <TableCategories/>
                         </div>
                         {/* End Page Content */}
                     </div>
                 </div>
             </div>
-           
         </>
     )
 }
 
-export default DefaultComponent
+export default Categories

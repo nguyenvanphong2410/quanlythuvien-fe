@@ -1,15 +1,31 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { logoutEmployee } from "../../services/Api";
 
 const HeaderAdmin = () => {
     const navigate = useNavigate();
-    
+
+    // Lấy token 
+    const token = localStorage.getItem('access_token'); 
+
+    //  kiểm tra token 
+    if (token && !sessionStorage.getItem('tokenChecked')) {
+        sessionStorage.setItem('tokenChecked', 'true');
+
+        window.location.href = '/';
+    } else if (!token) {
+        
+        window.location.href = '/login';
+    }
+
     const handOnClickLogout = () => {
+        logoutEmployee();
         navigate('/')
+        localStorage.removeItem('access_token');
     }
     return (
         <>
-        
+
             {/* Nav Item - User Information */}
             <li className="nav-item dropdown no-arrow ">
                 <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -23,7 +39,7 @@ const HeaderAdmin = () => {
                         Hồ sơ
                     </a>
                     <div className="dropdown-divider" />
-                    <button className="dropdown-item"  onClick={handOnClickLogout}>
+                    <button className="dropdown-item" onClick={handOnClickLogout}>
                         <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" />
                         Đăng xuất
                     </button>

@@ -1,27 +1,53 @@
 import { useEffect, useState } from "react";
-import { createBooks, deleteSoftBook, getAllCategoriesBook, getBooks } from "../../services/Api";
+import { createBooks, deleteSoftBook, getAllCategoriesBook, getAuthors, getBooks } from "../../services/Api";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import AddBook from "../../pages/Books/AddBook";
 
 const TableAuthors = () => {
 
     const [booksData, setBookData] = useState([]);
+    const [authorsData, setAuthorsData] = useState([]);
     const [categoriesData, setCategoriesData] = useState([]);
-    const [inputData, setInputData] = useState({});
+    const [inputData, setInputData] = useState({
+        author_ids: [], // Thêm một trường mới để lưu trữ author_ids
+    });
 
     useEffect(() => {
         // Lấy getAuthors
         getBooks({})
             .then(({ data }) => setBookData(data.data));
 
+        //Lấy tất cả danh mục sách
         getAllCategoriesBook({})
             .then(({ data }) => setCategoriesData(data.data));
+
+        //lấy thông tác giả
+        getAuthors({})
+            .then(({ data }) => setAuthorsData(data.data));
     }, [])
 
     //handleOnChangeInputCreateBook
     const onChangeInput = (e) => {
-        const { name, value } = e.target;
-        setInputData({ ...inputData, [name]: value });
+        const { name, value, checked } = e.target;
+
+        if (name === "author_ids") {
+            // Nếu trường name là "author_ids", thực hiện xử lý riêng
+            let updatedAuthorIds = [...inputData.author_ids];
+
+            if (checked) {
+                // Nếu ô checkbox được chọn, thêm giá trị vào mảng
+                updatedAuthorIds.push(value);
+            } else {
+                // Nếu ô checkbox được bỏ chọn, loại bỏ giá trị khỏi mảng
+                updatedAuthorIds = updatedAuthorIds.filter((id) => id !== value);
+            }
+
+            setInputData({ ...inputData, author_ids: updatedAuthorIds });
+        } else {
+            // Xử lý các trường input khác như bình thường
+            setInputData({ ...inputData, [name]: value });
+        }
         console.log(inputData);
 
     }
@@ -64,125 +90,9 @@ const TableAuthors = () => {
             {/* Thêm mới */}
             <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
                 <i className="fas fa-plus mr-2" />
-                <span>Thêm mới sách</span>
+                <Link style={{ textDecoration: "none" }} to="/add-book">Thêm mới sách</Link>
             </a>
-            <div id="collapsePages1" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                <form id="form-insert" className="">
 
-                    <div className="row">
-                        <div className="col-lg-3 col-md-6 col-sm-6 form-group">
-                            <label >Tên sách</label>
-                            <input
-                                name="name"
-                                type="text"
-                                className="form-control"
-                                id="name"
-                                aria-describedby="name"
-                                onChange={onChangeInput}
-                                value={inputData.name || ""}
-                            />
-                        </div>
-
-                        {/* <div className="col-lg-3 col-md-6 col-sm-6 form-group">
-                            <span className="nav-link collapsed pt-0 mt-4" href="#" data-toggle="collapse" data-target="#collapsePages12" aria-expanded="true" aria-controls="collapsePages">
-                                <span>Chọn tác giả</span>
-                                <i className="fas fa-caret-down ml-2" />
-                            </span>
-                            <div id="collapsePages12" className="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-
-                                <input name="author_ids" value={inputData.author_ids || ""} className="ml-4" type="checkbox"  />
-                                <label className="ml-3" for="vehicle1"> Trần Gia Huy</label><br />
-                                <input name="author_ids" value={inputData.author_ids || ""} className="ml-4" type="checkbox"  />
-                                <label className="ml-3" for="vehicle1"> Nguyễn Quang Huy</label><br />
-                                <input name="author_ids" value={inputData.author_ids || ""} className="ml-4" type="checkbox"  />
-                                <label className="ml-3" for="vehicle1"> Quốc Đam</label><br />
-
-                            </div>
-                        </div> */}
-
-
-                        <div className="col-lg-3 form-group">
-                            <label for="inputState">Thể loại</label>
-                            <select name="category_id" onChange={onChangeInput} value={inputData.category_id || ""} id="inputState" className="form-control">
-                                {
-                                    categoriesData.map((item, index) =>
-                                        < >
-                                            <option key={index} value={item._id}>{item.name}</option>
-                                        </>
-                                    )
-                                }
-                            </select>
-                        </div>
-
-                        <div className="col-lg-3 form-group">
-                            <label >Năm sáng tác</label>
-                            <input
-                                name="year_creation"
-                                type="date"
-                                className="form-control"
-                                id="year_creation"
-                                onChange={onChangeInput}
-                                value={inputData.year_creation || ""}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="form-group">
-                        <label >Mô tả</label>
-                        <textarea
-                            name="description"
-                            type="password"
-                            className="form-control"
-                            id="description"
-                            onChange={onChangeInput}
-                            value={inputData.description || ""}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label >Nội dung</label>
-                        <textarea
-                            name="content"
-                            type="password"
-                            className="form-control"
-                            id="content"
-                            onChange={onChangeInput}
-                            value={inputData.content || ""}
-                        />
-                    </div>
-
-                    <div className="row">
-                        <div className="col-lg-6 form-group">
-                            <div className="form-group">
-                                <label >Tổng số lượng sách</label>
-                                <input
-                                    name="total"
-                                    type="number"
-                                    className="form-control"
-                                    id="total"
-                                    onChange={onChangeInput}
-                                    value={inputData.total || ""}
-                                />
-                            </div>
-                        </div>
-                        <div className="col-lg-6 form-group">
-                            <div className="form-group">
-                                <label >Số lượng sách tồn</label>
-                                <input
-                                    name="stock"
-                                    type="number"
-                                    className="form-control"
-                                    id="stock"
-                                    onChange={onChangeInput}
-                                    value={inputData.stock || ""}
-                                />
-                            </div>
-                        </div>
-                    </div>
-                    <button onClick={onCLickSubmit} type="submit" className="btn btn-success ">Thêm</button>
-                </form>
-
-
-            </div>
             {/* End Thêm mới */}
 
             {/* DataTales Example */}
@@ -196,12 +106,12 @@ const TableAuthors = () => {
                                 <tr>
                                     <th>Tên Sách</th>
                                     <th>Thể loại</th>
-                                    <th>Năm xuất bản</th>
-                                    <th>Mô tả</th>
-                                    <th>Nội dung</th>
+                                    <th>Năm </th>
+                                    <th style={{ maxWidth: '50px' }}>Mô tả</th>
+                                    {/* <th>Nội dung</th> */}
                                     <th>Tổng số </th>
                                     <th>Số tồn</th>
-                                    <th colSpan={2} >Tùy chọn</th>
+                                    <th className="text-center" colSpan={2} >Tùy chọn</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -209,19 +119,21 @@ const TableAuthors = () => {
                                     booksData.map((item, index) =>
 
                                         <tr key={index}>
-                                            <td>{item.name}</td>
+                                            <td>
+                                                <Link style={{ textDecoration: "none" }} to={`/details-book/${item._id}`}>{item.name}</Link>
+                                            </td>
                                             <td>{item.category_id?.name}</td>
-                                            <td>{moment(item.year_creation).format('DD/MM/YYYY')}</td>
-                                            <td>{item.description}</td>
-                                            <td>{item.content}</td>
+                                            <td>{moment(item?.year_creation).format('DD/MM/YYYY')}</td>
+                                            <td style={{ maxWidth: '350px' }}>{item.description}</td>
+                                            {/* <td>{item.content}</td> */}
                                             <td>{item.total}</td>
                                             <td>{item.stock}</td>
-                                            <th>
+                                            <th className="text-center" >
                                                 <Link to={`/update-book/${item._id}`}>
                                                     <i id="ic-pen" className="fa fa-pen" />
                                                 </Link>
                                             </th>
-                                            <th>
+                                            <th className="text-center" >
                                                 <a onClick={() => onClickDelete(item._id)} data-toggle="modal" data-target="#delete-modal">
                                                     <i id="ic-trash" className="fa fa-trash" />
                                                 </a>

@@ -47,7 +47,7 @@ const TableEmployees = () => {
                                     <th>Họ tên nhân viên</th>
                                     <th>Số điện thoại</th>
                                     <th>Email</th>
-                                    <th colSpan={2} >Tùy chọn</th>
+                                    <th className="text-center" colSpan={2} >Tùy chọn</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,12 +57,12 @@ const TableEmployees = () => {
                                             <td>{item.name}</td>
                                             <td>{item.phone}</td>
                                             <td>{item.email}</td>
-                                            <th>
+                                            <th className="text-center" >
                                                 <Link to={`/update-employee/${item._id}`}>
                                                     <i id="ic-pen" className="fa fa-pen" />
                                                 </Link>
                                             </th>
-                                            <th>
+                                            <th className="text-center" >
                                                 <a onClick={() => onClickDelete(item._id)} data-toggle="modal" data-target="#delete-modal">
                                                     <i id="ic-trash" className="fa fa-trash" />
                                                 </a>

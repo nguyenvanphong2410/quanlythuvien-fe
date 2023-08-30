@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import HeaderAdmin from '../../components/layouts/HeaderAdmin';
 import Sidebar from '../../components/layouts/Sidebar';
-import { getAllCategoriesBook, getBookDetails, updateBook } from '../../services/Api';
+import { getAllCategoriesBook, getAuthors, getBookDetails, updateBook } from '../../services/Api';
 import { useParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
@@ -10,6 +10,7 @@ const UpdateBook = () => {
     const params = useParams();
     const id = params.id;
 
+    const [authorsData, setAuthorsData] = useState([]);
     const [bookDetailsData, setBookDetailsData] = useState(null);
     const [categoriesData, setCategoriesData] = useState([]);
 
@@ -20,12 +21,17 @@ const UpdateBook = () => {
         content: "",
         total: "",
         stock: "",
-        category_id: ""
+        category_id: "",
+        author_ids: ""
     });
+
 
     useEffect(() => {
         getAllCategoriesBook({})
             .then(({ data }) => setCategoriesData(data.data));
+        //lấy thông tác giả
+        getAuthors({})
+            .then(({ data }) => setAuthorsData(data.data));
     }, [])
 
     useEffect(() => {
@@ -39,8 +45,11 @@ const UpdateBook = () => {
                     content: data.data?.content || "",
                     total: data.data?.total || "",
                     stock: data.data?.stock || "",
-                    category_id: data.data?.category_id || ""
+                    category_id: data.data?.category_id || "",
+                    author_ids: data.data?.author_ids || ""
+
                 });
+                
             });
     }, [id]);
 
@@ -81,6 +90,8 @@ const UpdateBook = () => {
 
         return element;
     }
+    console.log('input author_id', inputData?.author_ids);
+    // const testt = inputData?.author_ids?._id.map((item) =>console.log('item inputData?.author_ids?._id',item));
     return (
         <>
             <div id="wrapper">
@@ -119,6 +130,54 @@ const UpdateBook = () => {
                                                         />
                                                     </div>
                                                 </div>
+                                                <div className="col-lg-12 form-group">
+                                                    <span
+                                                        style={{
+                                                            marginTop: '31px',
+                                                            height: '39px',
+                                                            backgroundColor: '#fff',
+                                                            border: '1px solid #d2d3de',
+                                                            borderRadius: '5px'
+                                                        }}
+                                                        className="nav-link collapsed pt-0 " href="#"
+                                                        data-toggle="collapse" data-target="#collapsePages12"
+                                                        aria-expanded="true" aria-controls="collapsePages">
+                                                        <span
+                                                            style={{
+                                                                marginTop: '5px',
+                                                                marginLeft: '40%',
+                                                            }}
+                                                        >Tác giả</span>
+                                                        <i className="fas fa-caret-down ml-2" />
+                                                    </span>
+                                                    <div
+                                                        style={{ maxHeight: '100px', overflow: 'auto' }}
+                                                        id="collapsePages12" className="collapse"
+                                                        aria-labelledby="headingPages" data-parent="#accordionSidebar"
+                                                    >
+
+                                                        {
+                                                            authorsData.map((item, index) =>
+                                                                <>
+                                                                    <input
+                                                                        key={index}
+                                                                        name="author_ids"
+                                                                        value={item._id}
+                                                                        className="ml-4"
+                                                                        type="checkbox"
+                                                                        onChange={onChangeInput}
+                                                                        checked={inputData?.author_ids.map((itemId) => itemId === item?._id ? '1': '' )}
+                                                                    />
+                                                                    <label className="ml-3" htmlFor="inputState" value={item._id}>
+                                                                        {item.name}
+                                                                    </label>
+                                                                    <br />
+                                                                </>
+                                                            )
+                                                        }
+                                                    </div>
+                                                </div>
+
                                                 <div className="col-lg-12 form-group">
                                                     <label for="inputState">Thể loại</label>
                                                     <select name="category_id" onChange={onChangeInput} id="inputState" className="form-control">

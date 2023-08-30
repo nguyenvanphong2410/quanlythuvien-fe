@@ -21,7 +21,7 @@ const Register = () => {
                 if (data.data.status === "OK") {
                     //Chuyển hướng sang login
                     alert(data.data.message)
-                    navigate('/');
+                    navigate('/login');
                 } else if (data.data.status === "ERR") {
                     alert(data.data.message)
                 }
@@ -97,7 +97,7 @@ const Register = () => {
                                             </form>
                                             <hr />
                                             <div className="text-center">
-                                                <Link className="small" to="/">Đã có tài khoản &gt; Đăng nhập</Link>
+                                                <Link className="small" to="/login">Đã có tài khoản &gt; Đăng nhập</Link>
                                             </div>
                                         </div>
                                     </div>
