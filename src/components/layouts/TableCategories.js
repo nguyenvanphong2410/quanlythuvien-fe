@@ -33,6 +33,9 @@ const TableCategories = () => {
         <>
              <ToastContainer />
             {/* Page Heading */}
+            <div className="d-sm-flex align-items-center justify-content-between">
+                <h2 className="">Thể loại sách </h2>
+            </div>
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
                     <i className="fas fa-plus mr-2" />

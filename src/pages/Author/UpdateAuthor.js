@@ -71,8 +71,8 @@ const UpdateAuthor = () => {
                         <div className="container-fluid">
                             <div>
                                 <div className="col-5">
-                                    <h2>Cập nhật thông tác giả</h2>
-                                   
+                                    {/* <h2>Cập nhật thông tác giả</h2> */}
+
                                 </div>
                                 <div className="col-7"></div>
                             </div>
@@ -80,7 +80,9 @@ const UpdateAuthor = () => {
                                 <div className='row'>
                                     <div className="col-3"></div>
                                     <div className="col-6">
-                                        <form method='POST' id="form-insert" className="">
+                                        <h2 className='text-center'>Cập nhật thông tác giả</h2>
+
+                                        <form method='POST' id="form-insert" className="mt-5">
                                             <div className="row">
                                                 <div className="col-lg-12 form-group">
                                                     <div className="form-group">
@@ -127,8 +129,9 @@ const UpdateAuthor = () => {
                                                 <div className="col-lg-12">
                                                     <button
                                                         type="submit"
-                                                        className="btn btn-primary"
+                                                        className="btn btn-primary float-right"
                                                         onClick={onCLickUpdate}
+                                                        
                                                     >
                                                         Cập nhật
                                                     </button>

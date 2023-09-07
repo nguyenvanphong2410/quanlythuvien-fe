@@ -83,8 +83,8 @@ const AddAuthor = () => {
                                                 aria-describedby="name"
                                                 onChange={onChangeInput}
                                                 value={inputComment.name || ""}
+                                                style={{width:'300px'}}
                                             />
-                                            <small id="emailHelp" className="form-text text-muted"> message...</small>
                                         </div>
                                     </div>
                                     <div className=" form-group">
@@ -96,6 +96,7 @@ const AddAuthor = () => {
                                                 className="form-control"
                                                 id="date_of_birth"
                                                 onChange={onChangeInput}
+                                                style={{width:'300px'}}
                                                 value={inputComment.date_of_birth || ""}
                                             />
                                         </div>
@@ -118,7 +119,6 @@ const AddAuthor = () => {
                                         editor={ClassicEditor}
                                         data={inputComment?.story || ""}
                                         onChange={onChangeEditor}
-                                        style={{ eight: '500px' }}
 
                                     />
 

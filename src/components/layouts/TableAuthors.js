@@ -37,7 +37,7 @@ const TableAuthors = () => {
             <ToastContainer />
             {/* Page Heading */}
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 className="h3 mb-0 text-gray-800">Tác Giả</h1>
+                <h2 className=" mb-0 ">Tác Giả</h2>
             </div>
             {/* Nav Item - Pages Collapse Menu */}
             {/* Thêm mới */}

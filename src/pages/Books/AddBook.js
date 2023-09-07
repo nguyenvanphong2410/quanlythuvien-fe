@@ -64,7 +64,6 @@ const AddBook = () => {
         e.preventDefault();
         createBooks(inputData, {})
             .then((data) => {
-                // setInputData({});
                 if (data.data.status === "OK") {
                     // alert(data.data.message);
                     // navigate('/books');

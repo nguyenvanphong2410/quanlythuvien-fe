@@ -33,7 +33,7 @@ const AuthorDetails = () => {
                         <div className="container-fluid">
                             <div>
                                 <div className="col-5">
-                                    <h1 style={{ fontWeight: "bold" }}>Chi tiết Tác giả</h1>
+                                    {/* <h1 style={{ fontWeight: "bold" }}>Chi tiết Tác giả</h1> */}
                                 </div>
                                 <div className="col-7"></div>
                             </div>
@@ -47,15 +47,16 @@ const AuthorDetails = () => {
 
                                             <div id="" className="">
 
-                                                <h4 style={{ fontWeight: "bold" }} className="text-dark">Tác giả {authorDetailsData?.name}</h4>
+                                                
 
                                                 <div className="row">
                                                     <div className="col-lg-3"></div>
                                                     <div className="col-lg-6">
+                                                    <h3 style={{ fontWeight: "bold" }} className="text-dark mb-4">Tác giả {authorDetailsData?.name}</h3>
                                                         <div className="row">
                                                             <div className="col-lg-5">
-                                                                <img style={{ width: "200px", height: '300px' }}
-                                                                    src="https://bloganchoi.com/wp-content/uploads/2021/11/1f035d318d5f6ce4deccf5e4ab3c0efc.jpg" alt="img-book-details" />
+                                                                <img style={{ width: "230px", height: '300px', borderRadius:'30%' }}
+                                                                    src="https://png.pngtree.com/png-vector/20200614/ourlarge/pngtree-businessman-user-avatar-character-vector-illustration-png-image_2242909.jpg" alt="img-book-details" />
                                                             </div>
                                                             <div className="col-lg-7">
                                                                 <ul>
@@ -83,7 +84,7 @@ const AuthorDetails = () => {
                                         <div id="" className="">
                                                 <h2 className="section-heading text-dark">Tiểu sử</h2>
                                                 <p className="text-justify">
-                                                    {authorDetailsData?.story}
+                                                    <div dangerouslySetInnerHTML={{ __html: `${authorDetailsData?.story}` }} />
                                                 </p>
                                         </div>
 

@@ -26,7 +26,6 @@ const Categories = () => {
                         <div className="container-fluid">
 
                         {/* ------ */}
-                        <h1>Thể loại sách</h1>
                         <TableCategories/>
                         </div>
                         {/* End Page Content */}

@@ -69,8 +69,8 @@ const TableAuthors = () => {
         <>
             <ToastContainer />
             {/* Page Heading */}
-            <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                <h1 className="h3 mb-0 text-gray-800">Sách</h1>
+            <div className="d-sm-flex align-items-center justify-content-between">
+                <h2 className="">Sách</h2>
             </div>
 
             {/* Thêm mới */}

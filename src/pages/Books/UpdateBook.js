@@ -11,6 +11,8 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { Checkbox } from 'antd';
+
 const UpdateBook = () => {
     const navigate = useNavigate();
     const params = useParams();
@@ -28,7 +30,7 @@ const UpdateBook = () => {
         total: "",
         stock: "",
         category_id: "",
-        author_ids: ""
+        author_ids: []
     });
 
 
@@ -52,20 +54,28 @@ const UpdateBook = () => {
                     total: data.data?.total || "",
                     stock: data.data?.stock || "",
                     category_id: data.data?.category_id || "",
-                    author_ids: data.data?.author_ids || ""
-
+                    author_ids: data.data?.author_ids || []
                 });
 
             });
     }, [id]);
 
     const onChangeInput = (e) => {
-        const { name, value } = e.target;
-        setInputData((prevInput) => ({
-            ...prevInput,
-            [name]: value
-        }));
-        console.log(inputData)
+        const { name, value, checked } = e.target;
+
+        if (name === "author_ids") {
+            setInputData(prevInput => ({
+                ...prevInput,
+                author_ids: checked
+                    ? [...prevInput.author_ids, value] // Thêm giá trị vào mảng
+                    : prevInput.author_ids.filter(id => id !== value) // Loại bỏ giá trị khỏi mảng
+            }));
+        } else {
+            setInputData(prevInput => ({
+                ...prevInput,
+                [name]: value
+            }));
+        }
     };
 
     const onChangeEditor = (event, editor) => {
@@ -73,6 +83,7 @@ const UpdateBook = () => {
         setInputData({ ...inputData, story: data });
     };
 
+    console.log('inputData', inputData);
     const onCLickUpdate = (e) => {
         e.preventDefault();
         updateBook(id, inputData)
@@ -80,7 +91,7 @@ const UpdateBook = () => {
                 if (data.status === "OK") {
                     // navigate('/books');
                     toast.success(data.message);
-                    setTimeout(() => navigate('/authors'), 1400)
+                    setTimeout(() => navigate('/books'), 1400)
                 } else if (data.status === "ERR") {
                     // alert(data.message);
                     toast.error(data.message);
@@ -88,23 +99,6 @@ const UpdateBook = () => {
             });
     };
 
-    // function handleHidden(element) {
-    //     if (element && element.props) {
-    //         if (!element.props.style) {
-    //             return React.cloneElement(element, { style: { display: 'none' } });
-    //         } else {
-    //             const { style } = element.props;
-    //             if (!style.hasOwnProperty('display')) {
-    //                 const newStyle = { ...style, display: 'none' };
-    //                 return React.cloneElement(element, { style: newStyle });
-    //             }
-    //         }
-    //     }
-
-    //     return element;
-    // }
-    // console.log('input author_id', inputData?.author_ids);
-    // // const testt = inputData?.author_ids?._id.map((item) =>console.log('item inputData?.author_ids?._id',item));
     return (
         <>
             <ToastContainer transition={Slide} />
@@ -121,14 +115,17 @@ const UpdateBook = () => {
                         <div className="container-fluid">
                             <div>
                                 <div className="col-5">
-                                    <h2>Cập nhật thông tin sách</h2>
+                                    {/* <h2>Cập nhật thông tin sách</h2> */}
                                 </div>
                                 <div className="col-7"></div>
                             </div>
                             <div id="update">
                                 <div className='row'>
+
                                     <div className="col-3"></div>
                                     <div className="col-6">
+                                        {/* <h2 className='align-item-center'>Cập nhật thông tin sách</h2> */}
+                                        <h2 className='text-center'>Cập nhật thông tin sách</h2>
                                         <form method='POST' id="form-insert" className="">
                                             <div className="row">
                                                 <div className="col-lg-12 form-group">
@@ -181,11 +178,13 @@ const UpdateBook = () => {
                                                                         className="ml-4"
                                                                         type="checkbox"
                                                                         onChange={onChangeInput}
-                                                                        // checked={inputData?.author_ids.map((itemId) => itemId === item._id ? '' : null)}
-                                                                        checked={inputData.author_ids._id === item._id ? 'm' : null}
-
+                                                                        checked={
+                                                                            inputData?.author_ids.some(
+                                                                                (itemId) => itemId?._id === item?._id
+                                                                            ) || null
+                                                                        }
                                                                     />
-                                                                    <label className="ml-3" htmlFor="inputState" value={item._id}>
+                                                                    <label className="ml-3" for="inputState" value={item._id}>
                                                                         {item.name}
                                                                     </label>
                                                                     <br />
@@ -256,21 +255,21 @@ const UpdateBook = () => {
                                                     <div className="form-group">
                                                         <label >Nội dung</label>
                                                         <input
-                                                            name="content"
-                                                            type="text"
-                                                            className="form-control"
-                                                            id="content"
-                                                            onChange={onChangeInput}
-                                                            value={inputData.content}
+                                                        name="content"
+                                                        type="text"
+                                                        className="form-control"
+                                                        id="content"
+                                                        onChange={onChangeInput}
+                                                        value={inputData.content}
                                                         />
-                                                    </div>
+                                                        </div>
                                                 </div> */}
                                                 <div className="col-lg-12 form-group">
                                                     <label >Nội dung</label>
                                                     <CKEditor
                                                         name="content"
                                                         editor={ClassicEditor}
-                                                        data={inputData?.content}
+                                                        data={inputData?.content || ""}
                                                     // onChange={onChangeEditor}
                                                     />
                                                 </div>
@@ -311,8 +310,9 @@ const UpdateBook = () => {
                                                 <div className="col-lg-12">
                                                     <button
                                                         type="submit"
-                                                        className="btn btn-primary mb-5"
+                                                        className="btn btn-primary mb-5 float-right"
                                                         onClick={onCLickUpdate}
+                                                        
                                                     >
                                                         Cập nhật
                                                     </button>
@@ -332,3 +332,5 @@ const UpdateBook = () => {
 };
 
 export default UpdateBook;
+
+// checked={Array.isArray(inputData.author_ids) && inputData.author_ids.some((itemId) => itemId._id === item._id) || ""}

@@ -33,7 +33,7 @@ const BookDetails = () => {
                         <div className="container-fluid">
                             <div>
                                 <div className="col-5">
-                                    <h1 style={{ fontWeight: "bold" }}>Chi tiết sách</h1>
+                                    {/* <h1 style={{ fontWeight: "bold" }}>Chi tiết sách</h1> */}
                                 </div>
                                 <div className="col-7"></div>
                             </div>
@@ -44,16 +44,14 @@ const BookDetails = () => {
                                     {/* Documnet Details */}
                                     <div id="">
                                         <div id="" className="">
-
                                             <div id="" className="">
-                                                <h4 className="text-dark mt-4 mb-4" style={{ fontWeight: "bold" }}>{bookDetailsData?.name}</h4>
-
                                                 <div className="row">
                                                     <div className="col-lg-3"></div>
                                                     <div className="col-lg-6">
+                                                        <h4 className="text-dark mb-4" style={{ fontWeight: "bold" }}>Sách {bookDetailsData?.name}</h4>
                                                         <div className="row">
                                                             <div className="col-lg-5">
-                                                                <img style={{ width: "200px", height: '300px' }}
+                                                                <img style={{ width: "200px", height: '300px', borderRadius:'13px' }}
                                                                     src="https://bloganchoi.com/wp-content/uploads/2021/11/1f035d318d5f6ce4deccf5e4ab3c0efc.jpg" alt="img-book-details" />
                                                             </div>
                                                             <div className="col-lg-7">
@@ -82,12 +80,12 @@ const BookDetails = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div id="document-body" className="">
+                                        <div id="document-body" >
                                             <div className="">
-                                                <h2 className="section-heading text-dark">Chi tiết </h2>
-                                                <p className="text-justify">
-                                                    {bookDetailsData?.content}
-                                                </p>
+                                                <h2 className="section-heading text-dark">Nội dung </h2>
+                                                <div className="text-justify">
+                                                    <div dangerouslySetInnerHTML={{ __html: `${bookDetailsData?.content}` }} />
+                                                </div>
 
                                             </div>
                                         </div>

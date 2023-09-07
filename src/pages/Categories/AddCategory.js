@@ -59,12 +59,17 @@ const AddCategory = () => {
                         <div className="container-fluid">
                             <div>
                                 <div className="col-5">
-                                    <h2>Thêm mới danh mục</h2>
+
                                 </div>
                                 <div className="col-7"></div>
                             </div>
 
                             <div id="collapsePages1" className="" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                                <div className='row'>
+                                    <div className='col-lg-3'></div>
+                                    <div className='col-lg-6'>
+                                    
+                                <h2 className='text-center'>Thêm mới danh mục</h2>
                                 <form id="form-insert" className="">
                                     <div className=" form-group">
                                         <div className="form-group">
@@ -100,7 +105,9 @@ const AddCategory = () => {
 
                                     <button onClick={onCLickSubmit} type="submit" className="btn btn-success mt-4">Thêm</button>
                                 </form>
-
+                                </div>
+                                <div className='col-lg-3'></div>
+                                </div>
 
                             </div>
 

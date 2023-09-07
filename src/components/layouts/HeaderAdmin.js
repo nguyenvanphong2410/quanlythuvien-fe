@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { logoutEmployee } from "../../services/Api";
 import Cookies from 'js-cookie';
 import jwt_decode from "jwt-decode";
-
+// import { Redirect } from "react-router-dom";
 
 const HeaderAdmin = () => {
     const navigate = useNavigate();
@@ -23,9 +23,10 @@ const HeaderAdmin = () => {
         window.location.href = '/';
         // navigate('/')
     } else if (!token) {
-        // navigate('/login')
+        // navigate('/login');
         window.location.href = '/login';
-    } 
+        // <Redirect to='/login' />
+    }
 
     const handleOnClickLogout = () => {
         Cookies.remove('access_token');

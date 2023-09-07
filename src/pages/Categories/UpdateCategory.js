@@ -22,7 +22,6 @@ const UpdateCategory = () => {
     const [inputData, setInputData] = useState({
         name: "",
         description: "",
-        
     });
 
     useEffect(() => {
@@ -63,7 +62,7 @@ const UpdateCategory = () => {
 
     return (
         <>
-                    <ToastContainer />
+            <ToastContainer />
             {/* Page Wrapper */}
             <div id="wrapper">
                 <Sidebar />
@@ -86,7 +85,7 @@ const UpdateCategory = () => {
                             {/* Thêm mới */}
                             <div>
                                 <div className="col-5">
-                                    <h2>Cập nhật thể loại sách</h2>
+                                    {/* <h2>Cập nhật thể loại sách</h2> */}
                                 </div>
                                 <div className="col-7"></div>
                             </div>
@@ -95,8 +94,8 @@ const UpdateCategory = () => {
                                 <div className='row'>
                                     <div className="col-3"></div>
                                     <div className="col-6">
-                                        {/* <h5>{messageStatus ? messageStatus}</h5> */}
-                                        <form method='POST' id="form-insert" className="">
+                                        <h2 className='text-center'>Cập nhật thông tin thể loại sách</h2>
+                                        <form method='POST' id="form-insert" className="mt-5">
                                             <div className="row">
                                                 <div className="col-lg-12 form-group">
                                                     <div className="form-group">
@@ -124,11 +123,11 @@ const UpdateCategory = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                
+
 
                                             </div>
 
-                                            <button onClick={onCLickUpdate} type="submit" className="btn btn-primary ">Lưu</button>
+                                            <button onClick={onCLickUpdate} type="submit" className="btn btn-primary float-right ">Lưu</button>
                                         </form>
                                     </div>
                                     <div className="col-3"></div>
