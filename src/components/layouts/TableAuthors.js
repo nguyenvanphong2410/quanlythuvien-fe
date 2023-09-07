@@ -3,6 +3,8 @@ import { createAuthors, deleteSoftAuthor, getAuthors } from "../../services/Api"
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TableAuthors = () => {
 
@@ -17,41 +19,22 @@ const TableAuthors = () => {
             .then(({ data }) => setAuthorData(data.data));
     }, [])
 
-    //onChangeInput 
-    const onChangeInput = (e) => {
-        const { name, value } = e.target;
-        setInputComment({ ...inputComment, [name]: value });
-        console.log(inputComment)
-    }
-
-    //onCLickSubmit
-    const onCLickSubmit = (e) => {
-        e.preventDefault();
-        createAuthors(inputComment, {})
-            .then(({ data }) => {
-                setInputComment({});
-                if (data.data.status === "OK") {
-                    window.location.reload();
-                } else if (data.data.status === "ERR") {
-                    alert(data.message);
-                }
-            });
-    }
-
     //onCLickDelete
     const onClickDelete = (id) => {
         deleteSoftAuthor(id)
             .then(({ data }) => {
                 if (data.status === "OK") {
-                    window.location.reload();
+                    toast.success(data.message);
+                    setTimeout(() => window.location.reload(), 1000)
                 } else if (data.status === "ERR") {
-                    alert(data.message);
+                    toast.error(data.message);
                 }
             })
     }
 
     return (
         <>
+            <ToastContainer />
             {/* Page Heading */}
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className="h3 mb-0 text-gray-800">Tác Giả</h1>
@@ -60,10 +43,10 @@ const TableAuthors = () => {
             {/* Thêm mới */}
             <div>
                 <div className="col-3">
-                    <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
+                    {/* <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages"> */}
                         <i className="fas fa-fw fa-user-plus mr-2" />
                         <Link style={{ textDecoration: "none" }} to="/add-author">Thêm mới tác giả</Link>
-                    </a>
+                    {/* </a> */}
                 </div>
                 <div className="col-10"></div>
             </div>
@@ -115,25 +98,25 @@ const TableAuthors = () => {
             </div>
 
             {/* confirm delete */}
-            <div id="delete-btn" class="modal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Xóa tác giả</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            {/* <div id="delete-btn" className="modal" tabindex="-1">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Xóa tác giả</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div class="modal-body">
+                        <div className="modal-body">
                             <p>Bạn có chắc chắn muốn xóa tác giả này?</p>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger">Xóa</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-danger">Xóa</button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Hủy</button>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
         </>
     )

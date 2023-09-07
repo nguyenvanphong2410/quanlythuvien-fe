@@ -5,6 +5,12 @@ import { getAllCategoriesBook, getAuthors, getBookDetails, updateBook } from '..
 import { useParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const UpdateBook = () => {
     const navigate = useNavigate();
     const params = useParams();
@@ -49,7 +55,7 @@ const UpdateBook = () => {
                     author_ids: data.data?.author_ids || ""
 
                 });
-                
+
             });
     }, [id]);
 
@@ -62,38 +68,47 @@ const UpdateBook = () => {
         console.log(inputData)
     };
 
+    const onChangeEditor = (event, editor) => {
+        const data = editor.getData();
+        setInputData({ ...inputData, story: data });
+    };
+
     const onCLickUpdate = (e) => {
         e.preventDefault();
         updateBook(id, inputData)
             .then(({ data }) => {
-                setInputData({});
                 if (data.status === "OK") {
-                    navigate('/books');
+                    // navigate('/books');
+                    toast.success(data.message);
+                    setTimeout(() => navigate('/authors'), 1400)
                 } else if (data.status === "ERR") {
-                    alert(data.message);
+                    // alert(data.message);
+                    toast.error(data.message);
                 }
             });
     };
 
-    function handleHidden(element) {
-        if (element && element.props) {
-            if (!element.props.style) {
-                return React.cloneElement(element, { style: { display: 'none' } });
-            } else {
-                const { style } = element.props;
-                if (!style.hasOwnProperty('display')) {
-                    const newStyle = { ...style, display: 'none' };
-                    return React.cloneElement(element, { style: newStyle });
-                }
-            }
-        }
+    // function handleHidden(element) {
+    //     if (element && element.props) {
+    //         if (!element.props.style) {
+    //             return React.cloneElement(element, { style: { display: 'none' } });
+    //         } else {
+    //             const { style } = element.props;
+    //             if (!style.hasOwnProperty('display')) {
+    //                 const newStyle = { ...style, display: 'none' };
+    //                 return React.cloneElement(element, { style: newStyle });
+    //             }
+    //         }
+    //     }
 
-        return element;
-    }
-    console.log('input author_id', inputData?.author_ids);
-    // const testt = inputData?.author_ids?._id.map((item) =>console.log('item inputData?.author_ids?._id',item));
+    //     return element;
+    // }
+    // console.log('input author_id', inputData?.author_ids);
+    // // const testt = inputData?.author_ids?._id.map((item) =>console.log('item inputData?.author_ids?._id',item));
     return (
         <>
+            <ToastContainer transition={Slide} />
+
             <div id="wrapper">
                 <Sidebar />
                 <div id="content-wrapper" className="d-flex flex-column">
@@ -166,7 +181,9 @@ const UpdateBook = () => {
                                                                         className="ml-4"
                                                                         type="checkbox"
                                                                         onChange={onChangeInput}
-                                                                        checked={inputData?.author_ids.map((itemId) => itemId === item?._id ? '1': '' )}
+                                                                        // checked={inputData?.author_ids.map((itemId) => itemId === item._id ? '' : null)}
+                                                                        checked={inputData.author_ids._id === item._id ? 'm' : null}
+
                                                                     />
                                                                     <label className="ml-3" htmlFor="inputState" value={item._id}>
                                                                         {item.name}
@@ -177,43 +194,50 @@ const UpdateBook = () => {
                                                         }
                                                     </div>
                                                 </div>
-
                                                 <div className="col-lg-12 form-group">
-                                                    <label for="inputState">Thể loại</label>
-                                                    <select name="category_id" onChange={onChangeInput} id="inputState" className="form-control">
 
-                                                        <option >{inputData.category_id?.name}</option>
-                                                        {categoriesData.map((item, index) => (
-                                                            inputData.category_id?._id === item._id ? (
-                                                                <option
-                                                                    key={index}
-                                                                    value={item._id}
-                                                                    style={{ display: 'none' }}
-                                                                >
-                                                                    {item.name}
-                                                                </option>
-                                                            ) : (
-                                                                <option key={index} value={item._id}>
-                                                                    {item.name}
-                                                                </option>
-                                                            )
-                                                        ))}
+                                                    <div className='row'>
+                                                        <div className="col-lg-6 form-group">
 
-                                                    </select>
-                                                </div>
-                                                <div className="col-lg-12 form-group">
-                                                    <div className="form-group">
-                                                        <label >Năm sáng tác</label>
-                                                        <input
-                                                            name="year_creation"
-                                                            type="date"
-                                                            className="form-control"
-                                                            id="year_creation"
-                                                            onChange={onChangeInput}
-                                                            value={inputData.year_creation}
-                                                        />
+
+                                                            <label for="inputState">Thể loại</label>
+                                                            <select name="category_id" onChange={onChangeInput} id="inputState" className="form-control">
+
+                                                                <option >{inputData.category_id?.name}</option>
+                                                                {categoriesData.map((item, index) => (
+                                                                    inputData.category_id?._id === item._id ? (
+                                                                        <option
+                                                                            key={index}
+                                                                            value={item._id}
+                                                                            style={{ display: 'none' }}
+                                                                        >
+                                                                            {item.name}
+                                                                        </option>
+                                                                    ) : (
+                                                                        <option key={index} value={item._id}>
+                                                                            {item.name}
+                                                                        </option>
+                                                                    )
+                                                                ))}
+
+                                                            </select>
+                                                        </div>
+                                                        <div className="col-lg-6 form-group">
+                                                            <div className="form-group">
+                                                                <label >Năm sáng tác</label>
+                                                                <input
+                                                                    name="year_creation"
+                                                                    type="date"
+                                                                    className="form-control"
+                                                                    id="year_creation"
+                                                                    onChange={onChangeInput}
+                                                                    value={inputData?.year_creation || ""}
+                                                                />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+
                                                 <div className="col-lg-12 form-group">
                                                     <div className="form-group">
                                                         <label >Mô tả</label>
@@ -227,7 +251,8 @@ const UpdateBook = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <div className="col-lg-12 form-group">
+
+                                                {/* <div className="col-lg-12 form-group">
                                                     <div className="form-group">
                                                         <label >Nội dung</label>
                                                         <input
@@ -239,33 +264,50 @@ const UpdateBook = () => {
                                                             value={inputData.content}
                                                         />
                                                     </div>
-                                                </div>
+                                                </div> */}
                                                 <div className="col-lg-12 form-group">
-                                                    <div className="form-group">
-                                                        <label >Tổng số lượng</label>
-                                                        <input
-                                                            name="total"
-                                                            type="number"
-                                                            className="form-control"
-                                                            id="total"
-                                                            onChange={onChangeInput}
-                                                            value={inputData.total}
-                                                        />
+                                                    <label >Nội dung</label>
+                                                    <CKEditor
+                                                        name="content"
+                                                        editor={ClassicEditor}
+                                                        data={inputData?.content}
+                                                    // onChange={onChangeEditor}
+                                                    />
+                                                </div>
+
+                                                <div className="col-lg-12 form-group">
+
+                                                    <div className='row'>
+                                                        <div className="col-lg-6 form-group">
+
+                                                            <div className="form-group">
+                                                                <label >Tổng số lượng</label>
+                                                                <input
+                                                                    name="total"
+                                                                    type="number"
+                                                                    className="form-control"
+                                                                    id="total"
+                                                                    onChange={onChangeInput}
+                                                                    value={inputData.total}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-lg-6 form-group">
+                                                            <div className="form-group">
+                                                                <label >Số lượng còn lại</label>
+                                                                <input
+                                                                    name="stock"
+                                                                    type="number"
+                                                                    className="form-control"
+                                                                    id="stock"
+                                                                    onChange={onChangeInput}
+                                                                    value={inputData.stock}
+                                                                />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div className="col-lg-12 form-group">
-                                                    <div className="form-group">
-                                                        <label >Số lượng còn lại</label>
-                                                        <input
-                                                            name="stock"
-                                                            type="number"
-                                                            className="form-control"
-                                                            id="stock"
-                                                            onChange={onChangeInput}
-                                                            value={inputData.stock}
-                                                        />
-                                                    </div>
-                                                </div>
+
                                                 <div className="col-lg-12">
                                                     <button
                                                         type="submit"

@@ -6,6 +6,9 @@ import { getDetailsCategory, updateCategory } from "../../services/Api";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const UpdateCategory = () => {
 
     //Navigate
@@ -48,12 +51,11 @@ const UpdateCategory = () => {
         e.preventDefault();
         updateCategory(id, inputData)
             .then(({ data }) => {
-                setInputData({});
                 if (data?.status === "OK") {
-                    navigate('/categories');
+                    toast.success(data.message);
+                    setTimeout(() => navigate('/categories'), 1400)
                 } else if (data?.status === "ERR") {
-                    alert(data?.message)
-                    window.location.reload();
+                    toast.error(data?.message);
                 }
             });
     }
@@ -61,6 +63,7 @@ const UpdateCategory = () => {
 
     return (
         <>
+                    <ToastContainer />
             {/* Page Wrapper */}
             <div id="wrapper">
                 <Sidebar />

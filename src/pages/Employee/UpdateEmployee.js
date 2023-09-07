@@ -6,6 +6,9 @@ import { getEmployeeDetails, updateEmployee } from "../../services/Api";
 import { Link, useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const UpdateEmployee = () => {
 
     //Navigate
@@ -51,13 +54,11 @@ const UpdateEmployee = () => {
         e.preventDefault();
         updateEmployee(id, inputData)
             .then(({ data }) => {
-                setInputData({});
                 if (data.status === "OK") {
-                    // Chuyển hướng đến đường dẫn mới
-                    navigate('/employees');
+                    toast.success(data.message);
+                    setTimeout(() => navigate('/employees'), 1400)
                 } else if (data.status === "ERR") {
-                    alert(data.message)
-                    // window.location.reload();
+                    toast.error(data.message);
                 }
             });
     }
@@ -65,6 +66,7 @@ const UpdateEmployee = () => {
 
     return (
         <>
+            <ToastContainer transition={Slide} />
             {/* Page Wrapper */}
             <div id="wrapper">
                 <Sidebar />

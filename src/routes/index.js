@@ -27,13 +27,11 @@ export const routes = [
         isShowHeader: false
     },
     {
-
         path: '/',
         page: DefaultComponent,
         isShowHeader: true
     },
     {
-
         path: '/register',
         page: Register,
         isShowHeader: false

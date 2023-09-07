@@ -7,6 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const AddBook = () => {
 
     const navigate = useNavigate();
@@ -19,11 +22,9 @@ const AddBook = () => {
     });
 
     useEffect(() => {
-        //Lấy tất cả danh mục sách
         getAllCategoriesBook({})
             .then(({ data }) => setCategoriesData(data.data));
 
-        //lấy thông tác giả
         getAuthors({})
             .then(({ data }) => setAuthorsData(data.data));
     }, [])
@@ -58,23 +59,26 @@ const AddBook = () => {
         setInputData({ ...inputData, content: data });
     };
 
-
     //onCLickSubmit
     const onCLickSubmit = (e) => {
         e.preventDefault();
         createBooks(inputData, {})
             .then((data) => {
-                setInputData({});
+                // setInputData({});
                 if (data.data.status === "OK") {
-                    alert(data.data.message);
-                    navigate('/books');
+                    // alert(data.data.message);
+                    // navigate('/books');
+                    toast.success(data.data.message);
+                    setTimeout(() => navigate('/books'), 1400)
                 } else if (data.data.status === "ERR") {
-                    alert(data.data.message);
+                    // alert(data.data.message);
+                    toast.error(data.data.message);
                 }
             });
     }
     return (
         <>
+         <ToastContainer />
             <div id="wrapper">
                 <Sidebar />
                 <div id="content-wrapper" className="d-flex flex-column">
@@ -147,7 +151,7 @@ const AddBook = () => {
                                                                 onChange={onChangeInput}
                                                                 checked={inputData.author_ids.includes(item._id)}
                                                             />
-                                                            <label className="ml-3" htmlFor="inputState" value={item._id}>
+                                                            <label className="ml-3"  value={item._id}>
                                                                 {item.name}
                                                             </label>
                                                             <br />
@@ -235,7 +239,7 @@ const AddBook = () => {
                                         />
                                     </div> */}
 
-                                    <label >Tiểu sử</label>
+                                    <label >Nội dung</label>
                                     <CKEditor
                                         name="content"
                                         editor={ClassicEditor}

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { createBooks, deleteSoftBook, getAllCategoriesBook, getAuthors, getBooks } from "../../services/Api";
 import { Link } from "react-router-dom";
 import moment from "moment";
-import AddBook from "../../pages/Books/AddBook";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const TableAuthors = () => {
 
@@ -18,11 +20,9 @@ const TableAuthors = () => {
         getBooks({})
             .then(({ data }) => setBookData(data.data));
 
-        //Lấy tất cả danh mục sách
         getAllCategoriesBook({})
             .then(({ data }) => setCategoriesData(data.data));
 
-        //lấy thông tác giả
         getAuthors({})
             .then(({ data }) => setAuthorsData(data.data));
     }, [])
@@ -52,36 +52,22 @@ const TableAuthors = () => {
 
     }
 
-    //onCLickSubmit
-    const onCLickSubmit = (e) => {
-        e.preventDefault();
-        createBooks(inputData, {})
-            .then((data) => {
-                setInputData({});
-                if (data.data.status === "OK") {
-                    alert(data.data.message);
-                    window.location.reload();
-                } else if (data.data.status === "ERR") {
-                    alert(data.data.message);
-                }
-            });
-    }
-
     //onCLickDelete
     const onClickDelete = (id) => {
         deleteSoftBook(id)
             .then(({ data }) => {
                 if (data.status === "OK") {
-                    window.location.reload();
+                    toast.success(data.message);
+                    setTimeout(() => window.location.reload(), 1000)
                 } else if (data.status === "ERR") {
-                    alert(data.message);
+                    toast.error(data.message);
                 }
             })
     }
 
     return (
         <>
-
+            <ToastContainer />
             {/* Page Heading */}
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className="h3 mb-0 text-gray-800">Sách</h1>
@@ -108,7 +94,6 @@ const TableAuthors = () => {
                                     <th>Thể loại</th>
                                     <th>Năm </th>
                                     <th style={{ maxWidth: '50px' }}>Mô tả</th>
-                                    {/* <th>Nội dung</th> */}
                                     <th>Tổng số </th>
                                     <th>Số tồn</th>
                                     <th className="text-center" colSpan={2} >Tùy chọn</th>
@@ -125,7 +110,6 @@ const TableAuthors = () => {
                                             <td>{item.category_id?.name}</td>
                                             <td>{moment(item?.year_creation).format('DD/MM/YYYY')}</td>
                                             <td style={{ maxWidth: '350px' }}>{item.description}</td>
-                                            {/* <td>{item.content}</td> */}
                                             <td>{item.total}</td>
                                             <td>{item.stock}</td>
                                             <th className="text-center" >
@@ -141,8 +125,6 @@ const TableAuthors = () => {
                                         </tr>
                                     )
                                 }
-
-
                             </tbody>
                         </table>
 

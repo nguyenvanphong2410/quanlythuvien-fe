@@ -2,10 +2,10 @@ import Http from "./Http";
 
 //API --- Nhân viên
 export const loginEmployee = (data) => {
-    return Http.post("employee/login", data);
+    return Http.post("auth/login", data);
 }
-export const logoutEmployee = (data) => {
-    return Http.post("employee/logout", data);
+export const logoutEmployee = () => {
+    return Http.get("auth/logout");
 }
 export const getInfo = (data) => {
     return Http.post("employee/get-info", data);

@@ -7,13 +7,15 @@ import { createAuthors, getAuthors } from '../../services/Api';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const AddAuthor = () => {
 
     const navigate = useNavigate();
 
     const [authorsData, setAuthorData] = useState([]);
     const [inputComment, setInputComment] = useState({});
-
     const [editorInstance, setEditorInstance] = useState(null);
 
     useEffect(() => {
@@ -21,8 +23,6 @@ const AddAuthor = () => {
         getAuthors({})
             .then(({ data }) => setAuthorData(data.data));
     }, [])
-
-
 
     //onChangeInput 
     const onChangeInput = (e) => {
@@ -41,18 +41,18 @@ const AddAuthor = () => {
         e.preventDefault();
         createAuthors(inputComment, {})
             .then(({ data }) => {
-                setInputComment({});
                 if (data.status === "OK") {
-                    alert(data.message);
-                    navigate('/authors')
+                    toast.success(data.message);
+                    setTimeout(() => navigate('/authors'), 1400)
                 } else if (data.status === "ERR") {
-                    alert(data.message);
+                    toast.error(data.message);
                 }
             });
     }
 
     return (
         <>
+            <ToastContainer />
             <div id="wrapper">
                 <Sidebar />
                 <div id="content-wrapper" className="d-flex flex-column">
@@ -118,8 +118,8 @@ const AddAuthor = () => {
                                         editor={ClassicEditor}
                                         data={inputComment?.story || ""}
                                         onChange={onChangeEditor}
-                                        style={{eight: '500px'}}
-                                        
+                                        style={{ eight: '500px' }}
+
                                     />
 
                                     <button onClick={onCLickSubmit} type="submit" className="btn btn-success mt-4">Thêm</button>

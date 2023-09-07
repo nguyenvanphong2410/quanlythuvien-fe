@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { loginEmployee } from "../../services/Api";
+import Cookies from 'js-cookie';
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import jwt_decode from "jwt-decode";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -20,30 +24,31 @@ const Login = () => {
 
     const OnClickLogin = (e) => {
         e.preventDefault();
+
         loginEmployee(inputData, {})
             .then((data) => {
-                setInputData({});
                 if (data.data.status === "OK") {
                     console.log('data', data.data)
-                    // console.log("Token thuộc về", data.data?.access_token);
-                    
-                    //localStorage
-                    localStorage.setItem('access_token', data.data?.access_token)
+                    // Lưu token vào cookie
+                    Cookies.set('access_token', data.data?.access_token, { expires: 7 }); // Thời gian hết hạn của cookie là 7 ngày
 
-                    //Chuyển hướng
-                    navigate('/');
                     
+                    navigate('/');
+
                 } else if (data.data.status === "ERR") {
-                    alert(data.data.message)
-                    window.location.reload();
+                    toast.error(data.data.message);
                 }
             })
 
     }
 
     return (
-
         <>
+            <ToastContainer 
+                limit={10}
+                transition={Slide}
+                // theme="dark"
+            />
             <div className="container">
                 {/* Outer Row */}
                 <div className="row justify-content-center">

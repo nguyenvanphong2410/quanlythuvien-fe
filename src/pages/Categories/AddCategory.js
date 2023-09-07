@@ -4,8 +4,8 @@ import Sidebar from '../../components/layouts/Sidebar';
 import { Link, useNavigate } from "react-router-dom";
 import { createAuthors, createCategoryBooks, getAuthors } from '../../services/Api';
 
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddCategory = () => {
 
@@ -34,18 +34,19 @@ const AddCategory = () => {
         e.preventDefault();
         createCategoryBooks(inputData)
             .then(({ data }) => {
-                setInputData({});
                 if (data.status === "OK") {
-                    alert(data.message);
-                    navigate('/categories')
+                    toast.success(data.message);
+                    setTimeout(() => navigate('/categories'), 1400)
+
                 } else if (data.status === "ERR") {
-                    alert(data.message);
+                    toast.error(data.message);
                 }
             });
     }
 
     return (
         <>
+            <ToastContainer />
             <div id="wrapper">
                 <Sidebar />
                 <div id="content-wrapper" className="d-flex flex-column">
@@ -79,7 +80,7 @@ const AddCategory = () => {
                                             />
                                         </div>
                                     </div>
-                                    
+
                                     <div className=" form-group">
                                         <div className="form-group">
                                             <label >Mô tả</label>
@@ -94,8 +95,8 @@ const AddCategory = () => {
                                             />
                                         </div>
                                     </div>
-                                    
-                                    
+
+
 
                                     <button onClick={onCLickSubmit} type="submit" className="btn btn-success mt-4">Thêm</button>
                                 </form>

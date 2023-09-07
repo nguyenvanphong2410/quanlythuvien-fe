@@ -4,6 +4,8 @@ import Sidebar from '../../components/layouts/Sidebar';
 import { getAuthorDetails, getBookDetails, updateAuthor, updateBook } from '../../services/Api';
 import { useParams, useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UpdateAuthor = () => {
     const navigate = useNavigate();
@@ -43,17 +45,20 @@ const UpdateAuthor = () => {
         e.preventDefault();
         updateAuthor(id, inputData)
             .then(({ data }) => {
-                setInputData({});
                 if (data.status === "OK") {
-                    navigate('/authors');
+                    toast.success(data.message);
+                    setTimeout(() => navigate('/authors'), 1400)
+                    // navigate('/authors');
                 } else if (data.status === "ERR") {
-                    alert(data.message);
+                    toast.error(data.message);
                 }
             });
     };
 
     return (
         <>
+            <ToastContainer />
+
             <div id="wrapper">
                 <Sidebar />
                 <div id="content-wrapper" className="d-flex flex-column">
@@ -67,6 +72,7 @@ const UpdateAuthor = () => {
                             <div>
                                 <div className="col-5">
                                     <h2>Cập nhật thông tác giả</h2>
+                                   
                                 </div>
                                 <div className="col-7"></div>
                             </div>
@@ -105,18 +111,19 @@ const UpdateAuthor = () => {
                                                 </div>
                                                 <div className="col-lg-12 form-group">
                                                     <div className="form-group">
-                                                        <label >Mô tả</label>
+                                                        <label >Tiểu sử</label>
                                                         <input
                                                             name="story"
                                                             type="text"
                                                             className="form-control"
                                                             id="story"
                                                             onChange={onChangeInput}
+
                                                             value={inputData.story}
                                                         />
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div className="col-lg-12">
                                                     <button
                                                         type="submit"

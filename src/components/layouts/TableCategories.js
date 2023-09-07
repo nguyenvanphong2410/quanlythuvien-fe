@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { deleteSoftCategory, getAllCategoriesBook } from "../../services/Api";
 import { Link, useNavigate } from "react-router-dom";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const TableCategories = () => {
     const navigate = useNavigate();
 
@@ -18,17 +21,17 @@ const TableCategories = () => {
         deleteSoftCategory(id)
             .then(({ data }) => {
                 if (data.status === "OK") {
-                    window.location.reload();
+                    toast.success(data.message);
+                    setTimeout(() => window.location.reload(), 1000)
                 } else if (data.status === "ERR") {
-                    alert(data.message);
+                    toast.error(data.message);
                 }
             })
     }
 
-
     return (
         <>
-
+             <ToastContainer />
             {/* Page Heading */}
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">

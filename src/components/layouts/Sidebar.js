@@ -5,19 +5,19 @@ import { useEffect, useState } from "react";
 const Sidebar = () => {
     const [categoriesData, setCategoriesData] = useState([]);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        // Lấy getAuthors
-        getAllCategoriesBook({})
-            .then(({ data }) => setCategoriesData(data.data));
-    }, [])
+    //     // Lấy getAuthors
+    //     getAllCategoriesBook({})
+    //         .then(({ data }) => setCategoriesData(data.data));
+    // }, [])
 
     return (
         <>
             {/* Sidebar */}
             <ul className="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion " id="accordionSidebar">
                 {/* Sidebar - Brand */}
-                <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/admin">
+                <Link className="sidebar-brand d-flex align-items-center justify-content-center" to="/">
                     <div className="sidebar-brand-icon rotate-n-15">
                         <i className="fas fa-book" />
                     </div>
@@ -32,7 +32,7 @@ const Sidebar = () => {
                 <li className="nav-item ml-3 active">
                     <Link className="nav-link" to="/employees">
                         <i className="fas fa-fw fa-user" />
-                        <span>Nhân viên</span>
+                        <span className="ml-2">Nhân viên</span>
                     </Link>
 
                 </li>
@@ -40,7 +40,7 @@ const Sidebar = () => {
                 <li className="nav-item ml-3 active">
                     <Link className="nav-link" to="/authors">
                         <i className="fas fa-fw fa-user" />
-                        <span>Tác giả</span>
+                        <span className="ml-2">Tác giả</span>
                     </Link>
 
                 </li>
@@ -49,7 +49,7 @@ const Sidebar = () => {
                  <li className="nav-item ml-3 active" >
                     <Link className="nav-link collapsed" to="/categories" data-toggle="" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
                         <i className="fas fa-fw fa-folder" />
-                        <span >Thể loại</span>
+                        <span className="ml-2">Thể loại</span>
                     </Link>
                 </li>
 
@@ -57,7 +57,7 @@ const Sidebar = () => {
                 <li className="nav-item ml-3 active">
                     <Link className="nav-link" to="/books">
                         <i className="fas fa-book" />
-                        <span>Sách</span>
+                        <span className="ml-2">Sách</span>
                     </Link>
                 </li>
 
