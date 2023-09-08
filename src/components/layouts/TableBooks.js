@@ -67,71 +67,73 @@ const TableAuthors = () => {
 
     return (
         <>
-            <ToastContainer />
-            {/* Page Heading */}
-            <div className="d-sm-flex align-items-center justify-content-between">
-                <h2 className="">Sách</h2>
-            </div>
+            <div className="container-fluid">
 
-            {/* Thêm mới */}
-            <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
-                <i className="fas fa-plus mr-2" />
-                <Link style={{ textDecoration: "none" }} to="/add-book">Thêm mới sách</Link>
-            </a>
+                <ToastContainer />
+                {/* Page Heading */}
+                <div className="d-sm-flex align-items-center justify-content-between">
+                    <h2 className="">Sách</h2>
+                </div>
 
-            {/* End Thêm mới */}
+                {/* Thêm mới */}
+                <a className="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages1" aria-expanded="true" aria-controls="collapsePages">
+                    <i className="fas fa-plus mr-2" />
+                    <Link style={{ textDecoration: "none" }} to="/add-book">Thêm mới sách</Link>
+                </a>
 
-            {/* DataTales Example */}
-            <div className="card shadow mb-4 mt-4">
-                <div className="card-body">
-                    <div className="table-responsive">
+                {/* End Thêm mới */}
 
-                        {/* TableAuthors */}
-                        <table className="table table-bordered" id="dataTable" width="100%" cellSpacing={0}>
-                            <thead>
-                                <tr>
-                                    <th>Tên Sách</th>
-                                    <th>Thể loại</th>
-                                    <th>Năm </th>
-                                    <th style={{ maxWidth: '50px' }}>Mô tả</th>
-                                    <th>Tổng số </th>
-                                    <th>Số tồn</th>
-                                    <th className="text-center" colSpan={2} >Tùy chọn</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    booksData.map((item, index) =>
+                {/* DataTales Example */}
+                <div className="card shadow mb-4 mt-4">
+                    <div className="card-body">
+                        <div className="table-responsive">
 
-                                        <tr key={index}>
-                                            <td>
-                                                <Link style={{ textDecoration: "none" }} to={`/details-book/${item._id}`}>{item.name}</Link>
-                                            </td>
-                                            <td>{item.category_id?.name}</td>
-                                            <td>{moment(item?.year_creation).format('DD/MM/YYYY')}</td>
-                                            <td style={{ maxWidth: '350px' }}>{item.description}</td>
-                                            <td>{item.total}</td>
-                                            <td>{item.stock}</td>
-                                            <th className="text-center" >
-                                                <Link to={`/update-book/${item._id}`}>
-                                                    <i id="ic-pen" className="fa fa-pen" />
-                                                </Link>
-                                            </th>
-                                            <th className="text-center" >
-                                                <a onClick={() => onClickDelete(item._id)} data-toggle="modal" data-target="#delete-modal">
-                                                    <i id="ic-trash" className="fa fa-trash" />
-                                                </a>
-                                            </th>
-                                        </tr>
-                                    )
-                                }
-                            </tbody>
-                        </table>
+                            {/* TableAuthors */}
+                            <table className="table table-bordered" id="dataTable" width="100%" cellSpacing={0}>
+                                <thead>
+                                    <tr>
+                                        <th>Tên Sách</th>
+                                        <th>Thể loại</th>
+                                        <th>Năm </th>
+                                        <th style={{ maxWidth: '50px' }}>Mô tả</th>
+                                        <th>Tổng số </th>
+                                        <th>Số tồn</th>
+                                        <th className="text-center" colSpan={2} >Tùy chọn</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        booksData.map((item, index) =>
 
+                                            <tr key={index}>
+                                                <td>
+                                                    <Link style={{ textDecoration: "none" }} to={`/details-book/${item._id}`}>{item.name}</Link>
+                                                </td>
+                                                <td>{item.category_id?.name}</td>
+                                                <td>{moment(item?.year_creation).format('DD/MM/YYYY')}</td>
+                                                <td style={{ maxWidth: '350px' }}>{item.description}</td>
+                                                <td>{item.total}</td>
+                                                <td>{item.stock}</td>
+                                                <th className="text-center" >
+                                                    <Link to={`/update-book/${item._id}`}>
+                                                        <i id="ic-pen" className="fa fa-pen" />
+                                                    </Link>
+                                                </th>
+                                                <th className="text-center" >
+                                                    <a onClick={() => onClickDelete(item._id)} data-toggle="modal" data-target="#delete-modal">
+                                                        <i id="ic-trash" className="fa fa-trash" />
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                        )
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
             </div>
-
 
         </>
     )

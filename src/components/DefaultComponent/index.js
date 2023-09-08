@@ -31,14 +31,8 @@ const DefaultComponent = () => {
                     {/* Main Content */}
                     <div id="content">
 
-                        {/* Topbar */}
-                        <nav className="navbar navbar-expand navbar-light bg-dark topbar mb-3 static-top shadow">
-                            {/* Topbar Navbar */}
-                            <ul className="navbar-nav ml-auto">
-                                <HeaderAdmin />
-                            </ul>
-                        </nav>
-                        {/* End of Topbar */}
+                        <HeaderAdmin />
+
                         {/* Begin Page Content */}
                         <div className="container-fluid">
                             <h1>Trang quản trị Quản Lí Thư Viện</h1>

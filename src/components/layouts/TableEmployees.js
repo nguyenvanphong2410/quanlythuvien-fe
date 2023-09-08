@@ -29,56 +29,59 @@ const TableEmployees = () => {
 
     return (
         <>
+            <div className="container-fluid">
 
-            {/* Page Heading */}
-            <div className="d-sm-flex align-items-center justify-content-between mb-4">
-                <h2 className="">Nhân viên</h2>
-            </div>
+                {/* Page Heading */}
+                <div className="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h2 className="">Nhân viên</h2>
+                </div>
 
-            {/* DataTales Example */}
-            <div className="card shadow mb-4 mt-4">
-                <div className="card-body">
-                    <div className="table-responsive">
+                {/* DataTales Example */}
+                <div className="card shadow mb-4 mt-4">
+                    <div className="card-body">
+                        <div className="table-responsive">
 
-                        {/* TableEmployees */}
-                        <table className="table table-bordered" id="dataTable" width="100%" cellSpacing={0}>
-                            <thead>
-                                <tr>
-                                    <th>Họ tên nhân viên</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Email</th>
-                                    <th className="text-center" colSpan={2} >Tùy chọn</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    employeesData.map((item, index) =>
-                                        <tr key={index}>
-                                            <td>{item.name}</td>
-                                            <td>{item.phone}</td>
-                                            <td>{item.email}</td>
-                                            <th className="text-center" >
-                                                <Link to={`/update-employee/${item._id}`}>
-                                                    <i id="ic-pen" className="fa fa-pen" />
-                                                </Link>
-                                            </th>
-                                            <th className="text-center" >
-                                                <a onClick={() => onClickDelete(item._id)} data-toggle="modal" data-target="#delete-modal">
-                                                    <i id="ic-trash" className="fa fa-trash" />
-                                                </a>
-                                            </th>
-                                        </tr>
-                                    )
-                                }
-                            </tbody>
-                        </table>
+                            {/* TableEmployees */}
+                            <table className="table table-bordered" id="dataTable" width="100%" cellSpacing={0}>
+                                <thead>
+                                    <tr>
+                                        <th>Họ tên nhân viên</th>
+                                        <th>Số điện thoại</th>
+                                        <th>Email</th>
+                                        <th className="text-center" colSpan={2} >Tùy chọn</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        employeesData.map((item, index) =>
+                                            <tr key={index}>
+                                                <td>{item.name}</td>
+                                                <td>{item.phone}</td>
+                                                <td>{item.email}</td>
+                                                <th className="text-center" >
+                                                    <Link to={`/update-employee/${item._id}`}>
+                                                        <i id="ic-pen" className="fa fa-pen" />
+                                                    </Link>
+                                                </th>
+                                                <th className="text-center" >
+                                                    <a onClick={() => onClickDelete(item._id)} data-toggle="modal" data-target="#delete-modal">
+                                                        <i id="ic-trash" className="fa fa-trash" />
+                                                    </a>
+                                                </th>
+                                            </tr>
+                                        )
+                                    }
+                                </tbody>
+                            </table>
 
+                        </div>
                     </div>
                 </div>
-            </div>
+                </div>
 
 
-            {/* Modal delete
+
+                {/* Modal delete
             <div id='delete-modal' class="modal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -101,9 +104,9 @@ const TableEmployees = () => {
             <script>
 
             </script> */}
-        </>
-    )
+            </>
+            )
 
 }
 
-export default TableEmployees;
+            export default TableEmployees;

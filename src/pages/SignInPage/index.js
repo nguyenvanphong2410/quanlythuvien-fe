@@ -11,6 +11,7 @@ const Login = () => {
 
     const [inputData, setInputData] = useState({});
     const [employeeData, setEmployeeData] = useState("");
+    const [emailError, setEmailError] = useState("");
 
     //OnChangeInput
     const onChangeInput = (e) => {
@@ -31,12 +32,11 @@ const Login = () => {
                     console.log('data', data.data)
                     // Lưu token vào cookie
                     Cookies.set('access_token', data.data?.access_token, { expires: 7 }); // Thời gian hết hạn của cookie là 7 ngày
-
-                    
                     navigate('/');
 
                 } else if (data.data.status === "ERR") {
-                    toast.error(data.data.message);
+                    setEmailError(data.data.message)
+                    // toast.error(data.data.message);
                 }
             })
 
@@ -44,11 +44,11 @@ const Login = () => {
 
     return (
         <>
-            <ToastContainer 
+            {/* <ToastContainer 
                 limit={10}
                 transition={Slide}
                 // theme="dark"
-            />
+            /> */}
             <div className="container">
                 {/* Outer Row */}
                 <div className="row justify-content-center">
@@ -62,6 +62,9 @@ const Login = () => {
                                             <div className="text-center">
                                                 <h1 className="h4 text-gray-900 mb-4">Đănh nhập</h1>
                                             </div>
+                                            {emailError && (
+                                                <p className="text-danger text-center">{emailError}</p>
+                                            )}
                                             <form className="user">
                                                 <div className="form-group">
                                                     <input

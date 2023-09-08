@@ -50,25 +50,12 @@ const AddCategory = () => {
             <div id="wrapper">
                 <Sidebar />
                 <div id="content-wrapper" className="d-flex flex-column">
-                    <div id="content">
-                        <nav className="navbar navbar-expand navbar-light bg-dark topbar mb-4 static-top shadow">
-                            <ul className="navbar-nav ml-auto">
-                                <HeaderAdmin />
-                            </ul>
-                        </nav>
-                        <div className="container-fluid">
-                            <div>
-                                <div className="col-5">
+                    <HeaderAdmin />
+                    <div className="container-fluid">
+                        <div className='row'>
+                            <div className='col-lg-3'></div>
 
-                                </div>
-                                <div className="col-7"></div>
-                            </div>
-
-                            <div id="collapsePages1" className="" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                                <div className='row'>
-                                    <div className='col-lg-3'></div>
-                                    <div className='col-lg-6'>
-                                    
+                            <div className='col-lg-6'>
                                 <h2 className='text-center'>Thêm mới danh mục</h2>
                                 <form id="form-insert" className="">
                                     <div className=" form-group">
@@ -100,17 +87,11 @@ const AddCategory = () => {
                                             />
                                         </div>
                                     </div>
-
-
-
                                     <button onClick={onCLickSubmit} type="submit" className="btn btn-success mt-4">Thêm</button>
                                 </form>
-                                </div>
-                                <div className='col-lg-3'></div>
-                                </div>
-
                             </div>
 
+                            <div className='col-lg-3'></div>
                         </div>
                     </div>
                 </div>
