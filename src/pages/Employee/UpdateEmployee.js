@@ -14,7 +14,6 @@ const UpdateEmployee = () => {
     //Navigate
     const navigate = useNavigate();
 
-    //Lấy id trên url
     const params = useParams();
     const id = params.id;
 
@@ -24,6 +23,12 @@ const UpdateEmployee = () => {
         email: "",
         phone: "",
     });
+    const [errorMessages, setErrorMessages] = useState({});
+
+
+    const hasNumber = /\d/;
+    const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
 
     useEffect(() => {
         // Lấy getAuthors
@@ -38,27 +43,86 @@ const UpdateEmployee = () => {
             });
     }, [id])
 
-    //handleOnChangeInputCreateAuthor
     const onChangeInput = (e) => {
         const { name, value } = e.target;
         setInputData((prevInput) => ({
             ...prevInput,
             [name]: value
         }));
-        console.log(inputData)
+        setErrorMessages({ ...errorMessages, [name]: "" });
     };
 
     const onCLickUpdate = (e) => {
         e.preventDefault();
-        updateEmployee(id, inputData)
-            .then(({ data }) => {
-                if (data.status === "OK") {
-                    toast.success(data.message);
-                    setTimeout(() => navigate('/employees'), 1400)
-                } else if (data.status === "ERR") {
-                    toast.error(data.message);
+
+        const isCheckEmail = reg.test(inputData.email);
+        const isTrueName = specialChars.test(inputData.name);
+        const ishasNumberName = hasNumber.test(inputData.name);
+        const isTruePhone = specialChars.test(inputData.phone);
+
+        const errors = {};
+
+        if (!inputData.name) {
+            errors.name = "Vui lòng nhập họ tên !";
+        } else if (isTrueName) {
+            errors.name = "Tên nhân viên không hợp lệ !";
+        } else if (ishasNumberName) {
+            errors.name = "Tên không thể có số !";
+        }
+
+        if (!inputData.email) {
+            errors.email = "Vui lòng nhập email !";
+        } else if (!isCheckEmail) {
+            errors.email = "Email không hợp lệ !";
+        }
+
+        if (!inputData.phone) {
+            errors.phone = "Vui lòng nhập số điện thoại !";
+        } else if (isTruePhone) {
+            errors.phone = "Số điện thoại không hợp lệ !";
+        }
+
+        if (Object.keys(errors).length > 0) {
+            setErrorMessages(errors);
+        } else {
+            const displayServerError = (errorType, errorMessage) => {
+                const errors = { ...errorMessages };
+
+                switch (errorType) {
+                    case 'email':
+                        errors.email = errorMessage;
+                        break;
+                    case 'phone':
+                        errors.phone = errorMessage;
+                        break;
+                    default:
+                        errors.serverError = errorMessage;
+                        break;
                 }
-            });
+
+                setErrorMessages(errors);
+            };
+
+            updateEmployee(id, inputData)
+                .then(({ data }) => {
+                    console.log('errdata', data);
+                    if (data.data.status === "OK") {
+                        toast.success(data.data.message);
+                        setTimeout(() => navigate('/employees'), 1400)
+                    } else if (data.data.status === "ERR") {
+                        displayServerError(data.data.type, data.data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.log('errdata', error?.response?.data?.type);
+                    if (error?.response?.data?.type) {
+                        displayServerError(
+                            error.response.data.type,
+                            error.response.data.message
+                        );
+                    }
+                });
+        }
     }
 
     return (
@@ -86,7 +150,11 @@ const UpdateEmployee = () => {
                                                     aria-describedby="name"
                                                     onChange={onChangeInput}
                                                     value={inputData.name}
+
                                                 />
+                                                {errorMessages.name && (
+                                                    <p className="text-danger ml-3">{errorMessages.name}</p>
+                                                )}
                                             </div>
                                         </div>
                                         <div className="col-lg-12 form-group">
@@ -100,6 +168,9 @@ const UpdateEmployee = () => {
                                                     onChange={onChangeInput}
                                                     value={inputData.email}
                                                 />
+                                                {errorMessages.email && (
+                                                    <p className="text-danger ml-3">{errorMessages.email}</p>
+                                                )}
                                             </div>
                                         </div>
 
@@ -115,6 +186,9 @@ const UpdateEmployee = () => {
                                                     onChange={onChangeInput}
                                                     value={inputData.phone}
                                                 />
+                                                {errorMessages.phone && (
+                                                    <p className="text-danger ml-3">{errorMessages.phone}</p>
+                                                )}
                                             </div>
                                         </div>
                                     </div>

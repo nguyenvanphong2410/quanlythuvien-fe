@@ -5,6 +5,11 @@ import { createEmployee } from "../../services/Api";
 const Register = () => {
     const navigate = useNavigate();
     const [inputData, setInputData] = useState({});
+    const [messageError, setMessageError] = useState("");
+
+    const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+
 
     //handleOnChangeEmail
     const onChangeInput = (e) => {
@@ -15,17 +20,33 @@ const Register = () => {
 
     const onCLickSubmit = (e) => {
         e.preventDefault();
-        createEmployee(inputData, {})
-            .then((data) => {
-                setInputData({});
-                if (data.data.status === "OK") {
-                    //Chuyển hướng sang login
-                    alert(data.data.message)
-                    navigate('/login');
-                } else if (data.data.status === "ERR") {
-                    alert(data.data.message)
-                }
-            });
+
+        const isCheckEmail = reg.test(inputData.email);
+
+        const isTrueName = specialChars.test(inputData.name)
+
+        //Kiểm tra 
+        if (!inputData.name || !inputData.email || !inputData.password || !inputData.phone) {
+            setMessageError('Vui lòng điền đầy đủ thông tin !')
+        } else if (!isTrueName) {
+            setMessageError('Tên nhân viên không hợp lệ !')
+        } else if (!isCheckEmail) {
+            setMessageError('Email không hợp lệ !')
+        } else {
+            createEmployee(inputData, {})
+                .then((data) => {
+                    if (data.data.data.status === "OK") {
+                        alert(data.data.data.message)
+                        navigate('/login');
+                    }
+                    else if (data.data.data.status === "ERR") {
+                        setMessageError(data.data.message)
+                    }
+                })
+                .catch((data) => {
+                    setMessageError(data?.response?.data?.message)
+                })
+        }
     }
 
     return (
@@ -42,6 +63,9 @@ const Register = () => {
                                             <div className="text-center">
                                                 <h1 className="h4 text-gray-900 mb-4">Đăng ký</h1>
                                             </div>
+                                            {messageError && (
+                                                <p className="text-danger text-center">{messageError}</p>
+                                            )}
                                             <form className="user">
                                                 <div className="form-group ">
                                                     <input

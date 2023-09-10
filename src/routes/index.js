@@ -18,6 +18,7 @@ import AuthorDetails from "../pages/Author/AuthorDetails"
 import Categories from "../pages/Categories"
 import AddCategory from "../pages/Categories/AddCategory"
 import UpdateCategory from "../pages/Categories/UpdateCategory"
+import AddEmployee from "../pages/Employee/AddEmployee"
 
 
 export const routes = [
@@ -39,6 +40,11 @@ export const routes = [
     {
         path: '/employees',
         page: Employees,
+        isShowHeader: false
+    },
+    {
+        path: '/add-employee',
+        page: AddEmployee,
         isShowHeader: false
     },
     {

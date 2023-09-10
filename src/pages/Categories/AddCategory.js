@@ -87,7 +87,7 @@ const AddCategory = () => {
                                             />
                                         </div>
                                     </div>
-                                    <button onClick={onCLickSubmit} type="submit" className="btn btn-success mt-4">Thêm</button>
+                                    <button onClick={onCLickSubmit} type="submit" className="btn btn-success mt-4 float-right">Thêm</button>
                                 </form>
                             </div>
 

@@ -11,7 +11,10 @@ const Login = () => {
 
     const [inputData, setInputData] = useState({});
     const [employeeData, setEmployeeData] = useState("");
-    const [emailError, setEmailError] = useState("");
+    const [messageError, setMessageError] = useState("");
+
+    const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+
 
     //OnChangeInput
     const onChangeInput = (e) => {
@@ -23,23 +26,34 @@ const Login = () => {
         console.log(inputData)
     };
 
-    const OnClickLogin = (e) => {
+    const OnClickLogin = async (e) => {
         e.preventDefault();
 
-        loginEmployee(inputData, {})
-            .then((data) => {
-                if (data.data.status === "OK") {
-                    console.log('data', data.data)
-                    // Lưu token vào cookie
-                    Cookies.set('access_token', data.data?.access_token, { expires: 7 }); // Thời gian hết hạn của cookie là 7 ngày
-                    navigate('/');
+        const isCheckEmail = reg.test(inputData.email);
 
-                } else if (data.data.status === "ERR") {
-                    setEmailError(data.data.message)
-                    // toast.error(data.data.message);
-                }
-            })
-
+        // Kiểm tra email
+        if (!inputData.email || !inputData.password) {
+            console.log('trong nha may')
+            setMessageError('Vui lòng điền đầy đủ thông tin !')
+        } else if (!isCheckEmail) {
+            setMessageError('Email không hợp lệ !')
+        } else {
+            // Gọi API login
+            loginEmployee(inputData, {})
+                .then((data) => {
+                    if (data.data.data.status === "OK") {
+                        console.log('data', data.data)
+                        // Lưu token vào cookie, hết hạn 7 ngày
+                        Cookies.set('access_token', data.data.data?.access_token, { expires: 7 });
+                        navigate('/');
+                    } else if (data.data.status === "ERR") {
+                        setMessageError(data.data.message)
+                    }
+                })
+                .catch((data) => {
+                    setMessageError(data?.response?.data?.message)
+                })
+        }
     }
 
     return (
@@ -62,8 +76,8 @@ const Login = () => {
                                             <div className="text-center">
                                                 <h1 className="h4 text-gray-900 mb-4">Đănh nhập</h1>
                                             </div>
-                                            {emailError && (
-                                                <p className="text-danger text-center">{emailError}</p>
+                                            {messageError && (
+                                                <p className="text-danger text-center">{messageError}</p>
                                             )}
                                             <form className="user">
                                                 <div className="form-group">

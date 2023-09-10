@@ -10,8 +10,12 @@ const TableAuthors = () => {
 
     const navigate = useNavigate();
 
+
     const [authorsData, setAuthorData] = useState([]);
     const [inputComment, setInputComment] = useState({});
+
+    const [authorToDelete, setAuthorToDelete] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         // Lấy getAuthors
@@ -19,18 +23,48 @@ const TableAuthors = () => {
             .then(({ data }) => setAuthorData(data.data));
     }, [])
 
-    //onCLickDelete
-    const onClickDelete = (id) => {
-        deleteSoftAuthor(id)
-            .then(({ data }) => {
-                if (data.status === "OK") {
-                    toast.success(data.message);
-                    setTimeout(() => window.location.reload(), 1000)
-                } else if (data.status === "ERR") {
-                    toast.error(data.message);
-                }
-            })
-    }
+    // //onCLickDelete
+    // const onClickDelete = (id) => {
+    //     deleteSoftAuthor(id)
+    //         .then(({ data }) => {
+    //             if (data.status === "OK") {
+    //                 toast.success(data.message);
+    //                 setTimeout(() => window.location.reload(), 1000)
+    //             } else if (data.status === "ERR") {
+    //                 toast.error(data.message);
+    //             }
+    //         })
+    // }
+
+    const onClickDelete = (author) => {
+        setAuthorToDelete(author);
+        setShowDeleteModal(true);
+    };
+
+    const handleDelete = () => {
+        if (authorToDelete) {
+            // Gọi API để xóa tác giả
+            deleteSoftAuthor(authorToDelete._id)
+                .then(({ data }) => {
+                    if (data.status === "OK") {
+                        // Xóa thành công, cập nhật danh sách tác giả
+                        const updatedAuthors = authorsData.filter(
+                            (author) => author._id !== authorToDelete._id
+                        );
+                        setAuthorData(updatedAuthors);
+                        setShowDeleteModal(false);
+                        window.location.reload();
+                    } else if (data.status === "ERR") {
+                        // Hiển thị thông báo lỗi nếu cần
+                        alert(data.message);
+                    }
+                });
+        }
+    };
+
+    const handleCancelDelete = () => {
+        setShowDeleteModal(false);
+    };
 
     return (
         <>
@@ -75,8 +109,17 @@ const TableAuthors = () => {
                                                         <i id="ic-pen" className="fa fa-pen" />
                                                     </Link>
                                                 </th>
+                                                {/* <th className="text-center">
+                                                    <a onClick={() => onClickDelete(item)} data-toggle="modal" data-target="#delete-modal">
+                                                        <i id="ic-trash" className="fa fa-trash" />
+                                                    </a>
+                                                </th> */}
                                                 <th className="text-center">
-                                                    <a onClick={() => onClickDelete(item._id)} data-toggle="modal" data-target="#delete-modal">
+                                                    <a
+                                                        onClick={() => onClickDelete(item)}
+                                                        data-toggle="modal"
+                                                        data-target="#delete-modal"
+                                                    >
                                                         <i id="ic-trash" className="fa fa-trash" />
                                                     </a>
                                                 </th>
@@ -90,26 +133,50 @@ const TableAuthors = () => {
                     </div>
                 </div>
 
-                {/* confirm delete */}
-                {/* <div id="delete-btn" className="modal" tabindex="-1">
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-header">
-                            <h5 className="modal-title">Xóa tác giả</h5>
-                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <p>Bạn có chắc chắn muốn xóa tác giả này?</p>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-danger">Xóa</button>
-                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                {/* Modal delete */}
+                <div
+                    id="delete-modal"
+                    className="modal"
+                    tabIndex="-1"
+                    style={{ display: showDeleteModal ? "block" : "none" }}
+                >
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">Xóa tác giả</h5>
+                                <button
+                                    type="button"
+                                    className="close"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
+                                    onClick={handleCancelDelete}
+                                >
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                <p>Bạn có chắc chắn muốn xóa tác giả này?</p>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-danger"
+                                    onClick={handleDelete}
+                                >
+                                    Xóa
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-dismiss="modal"
+                                    onClick={handleCancelDelete}
+                                >
+                                    Hủy
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div> */}
             </div>
 
         </>
