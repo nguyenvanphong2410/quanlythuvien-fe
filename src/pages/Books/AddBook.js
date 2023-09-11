@@ -18,8 +18,16 @@ const AddBook = () => {
     const [authorsData, setAuthorsData] = useState([]);
     const [categoriesData, setCategoriesData] = useState([]);
     const [inputData, setInputData] = useState({
-        author_ids: [], 
+        author_ids: [],
     });
+    const [editorInstance, setEditorInstance] = useState(null);
+    const [errorMessages, setErrorMessages] = useState({});
+
+    const hasNumber = /\d/;
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    const specialCharsDescription = /[$%^&*_\[\]{}|]+/;
+    const specialCharsContent = /[$%^&*_\[\]{}|]+/;
+
 
     useEffect(() => {
         getAllCategoriesBook({})
@@ -50,8 +58,8 @@ const AddBook = () => {
             // Xử lý các trường input khác như bình thường
             setInputData({ ...inputData, [name]: value });
         }
-        console.log(inputData);
-
+        setErrorMessages({ ...errorMessages, [name]: "" });
+        console.log(inputData)
     }
 
     const onChangeEditor = (event, editor) => {
@@ -62,15 +70,106 @@ const AddBook = () => {
     //onCLickSubmit
     const onCLickSubmit = (e) => {
         e.preventDefault();
-        createBooks(inputData, {})
-            .then((data) => {
-                if (data.data.status === "OK") {
-                    toast.success(data.data.message);
-                    setTimeout(() => navigate('/books'), 1400)
-                } else if (data.data.status === "ERR") {
-                    toast.error(data.data.message);
+
+        const isTrueName = specialChars.test(inputData.name);
+        const isTrueDescription = specialCharsDescription.test(inputData.description)
+        const isTrueContent = specialCharsContent.test(inputData.content)
+
+        const errors = {};
+
+        if (!inputData.name) {
+            errors.name = "Vui lòng nhập họ tên !";
+        } else if (isTrueName) {
+            errors.name = "Tên tác giả không hợp lệ !";
+        }
+
+        if (inputData.author_ids.length === 0) {
+            errors.author_ids = "Vui lòng chọn tác giả !";
+        }
+
+        if (!inputData.category_id) {
+            errors.category_id = "Vui lòng chọn thể loại sách !";
+        }
+
+        if (!inputData.year_creation) {
+            errors.year_creation = "Vui lòng chọn ngày tháng năm !";
+        }
+
+        if (!inputData.total) {
+            errors.total = "Vui lòng điền tổng sổ lượng !";
+        }
+        if (!inputData.stock) {
+            errors.stock = "Vui lòng điền tổng sổ lượng tồn !";
+        }
+
+        if (!inputData.description) {
+            errors.description = "Vui lòng điền mô tả !";
+        } else if (isTrueDescription) {
+            errors.description = "Mô tả không hợp lệ !";
+        }
+
+        if (!inputData.content) {
+            errors.content = "Vui lòng nhập nội dung!";
+        } else if (isTrueContent) {
+            errors.content = "Nội dung không hợp lệ !";
+        }
+
+        if (Object.keys(errors).length > 0) {
+            setErrorMessages(errors);
+        } else {
+            const displayServerError = (errorType, errorMessage) => {
+                const errors = { ...errorMessages };
+
+                switch (errorType) {
+                    case 'name':
+                        errors.email = errorMessage;
+                        break;
+                    case 'content':
+                        errors.content = errorMessage;
+                        break;
+                    case 'stock':
+                        errors.stock = errorMessage;
+                        break;
+                    case 'total':
+                        errors.total = errorMessage;
+                        break;
+                    case 'description':
+                        errors.description = errorMessage;
+                        break;
+                    // case 'description':
+                    //     errors.description = errorMessage;
+                    //     break;
+                    // case 'description':
+                    //     errors.description = errorMessage;
+                    //     break;
+                    // case 'auhthor_ids':
+                    //     errors.author_ids = errorMessage;
+                    //     break;
+                    default:
+                        errors.serverError = errorMessage;
+                        break;
                 }
-            });
+
+                setErrorMessages(errors);
+            };
+            createBooks(inputData, {})
+                .then((data) => {
+                    if (data.data.data.status === "OK") {
+                        toast.success(data.data.data.message);
+                        setTimeout(() => navigate('/books'), 1400)
+                    } else if (data.data.data.status === "ERR") {
+                        toast.error(data.data.message);
+                    }
+                })
+                .catch((error) => {
+                    if (error?.response?.data?.type) {
+                        displayServerError(
+                            error.response.data.type,
+                            error.response.data.message
+                        );
+                    }
+                });
+        }
     }
     return (
         <>
@@ -95,6 +194,9 @@ const AddBook = () => {
                                             onChange={onChangeInput}
                                             value={inputData.name || ""}
                                         />
+                                        {errorMessages.name && (
+                                            <p className="text-danger ml-3">{errorMessages.name}</p>
+                                        )}
                                     </div>
 
                                     <div className="col-lg-4  form-group">
@@ -143,10 +245,14 @@ const AddBook = () => {
                                                 )
                                             }
                                         </div>
+                                        {errorMessages.author_ids && (
+                                            <p className="text-danger ml-3">{errorMessages.author_ids}</p>
+                                        )}
                                     </div>
                                     <div className="col-lg-4 form-group">
                                         <label for="inputState">Thể loại</label>
                                         <select name="category_id" onChange={onChangeInput} value={inputData.category_id || ""} id="inputState" className="form-control">
+                                            <option >chọn thể loại ...</option>
                                             {
                                                 categoriesData.map((item, index) =>
                                                     < >
@@ -155,6 +261,10 @@ const AddBook = () => {
                                                 )
                                             }
                                         </select>
+                                        {errorMessages.category_id && (
+                                            <p className="text-danger ml-3">{errorMessages.category_id}</p>
+                                        )}
+
                                     </div>
                                 </div>
                                 <div className='row'>
@@ -168,6 +278,9 @@ const AddBook = () => {
                                             onChange={onChangeInput}
                                             value={inputData.year_creation || ""}
                                         />
+                                        {errorMessages.year_creation && (
+                                            <p className="text-danger ml-3">{errorMessages.year_creation}</p>
+                                        )}
                                     </div>
                                     <div className="col-lg-4 form-group">
                                         <div className="form-group">
@@ -180,6 +293,9 @@ const AddBook = () => {
                                                 onChange={onChangeInput}
                                                 value={inputData.total || ""}
                                             />
+                                            {errorMessages.total && (
+                                                <p className="text-danger ml-3">{errorMessages.total}</p>
+                                            )}
                                         </div>
                                     </div>
                                     <div className="col-lg-4 form-group">
@@ -193,6 +309,9 @@ const AddBook = () => {
                                                 onChange={onChangeInput}
                                                 value={inputData.stock || ""}
                                             />
+                                            {errorMessages.stock && (
+                                                <p className="text-danger ml-3">{errorMessages.stock}</p>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -206,6 +325,9 @@ const AddBook = () => {
                                         onChange={onChangeInput}
                                         value={inputData.description || ""}
                                     />
+                                    {errorMessages.description && (
+                                        <p className="text-danger ml-3">{errorMessages.description}</p>
+                                    )}
                                 </div>
 
                                 <label >Nội dung</label>
@@ -216,6 +338,9 @@ const AddBook = () => {
                                     onChange={onChangeEditor}
                                     style={{ minHeight: "500px" }}
                                 />
+                                {errorMessages.content && (
+                                    <p className="text-danger ml-3">{errorMessages.content}</p>
+                                )}
                                 <button
                                     onClick={onCLickSubmit}
                                     type="submit"

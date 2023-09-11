@@ -29,7 +29,12 @@ const UpdateBook = () => {
         category_id: "",
         author_ids: []
     });
+    const [errorMessages, setErrorMessages] = useState({});
 
+
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    const specialCharsDescription = /[$%^&*_\[\]{}|]+/;
+    const specialCharsContent = /[$%^&*_\[\]{}|]+/;
 
     useEffect(() => {
         getAllCategoriesBook({})
@@ -72,6 +77,8 @@ const UpdateBook = () => {
                 [name]: value
             }));
         }
+        setErrorMessages({ ...errorMessages, [name]: "" });
+        // console.log(inputData)
     };
 
     const onChangeEditor = (event, editor) => {
@@ -85,17 +92,119 @@ const UpdateBook = () => {
     console.log('inputData', inputData);
     const onCLickUpdate = (e) => {
         e.preventDefault();
-        updateBook(id, inputData)
-            .then(({ data }) => {
-                if (data.status === "OK") {
-                    // navigate('/books');
-                    toast.success(data.message);
-                    setTimeout(() => navigate('/books'), 1400)
-                } else if (data.status === "ERR") {
-                    // alert(data.message);
-                    toast.error(data.message);
+
+        const parseIntTotal = inputData.total = parseInt(inputData.total)
+        const parseIntStock = inputData.stock = parseInt(inputData.stock)
+
+        // console.log(test);
+        // console.log('Type of',typeof(test));
+
+        const isTrueName = specialChars.test(inputData.name);
+        const isTrueDescription = specialCharsDescription.test(inputData.description)
+        const isTrueContent = specialCharsContent.test(inputData.content)
+
+        const errors = {};
+
+        if (!inputData.name) {
+            errors.name = "Vui lòng nhập tên sách !";
+        } else if (isTrueName) {
+            errors.name = "Tên tác giả không hợp lệ !";
+        }
+
+        if (inputData.author_ids.length === 0) {
+            errors.author_ids = "Vui lòng chọn tác giả !";
+        }
+
+        if (!inputData.category_id) {
+            errors.category_id = "Vui lòng chọn thể loại sách !";
+        }
+
+        if (!inputData.year_creation) {
+            errors.year_creation = "Vui lòng chọn ngày tháng năm !";
+        }
+
+        if (!inputData.total) {
+            errors.total = "Vui lòng điền tổng sổ lượng !";
+        } else if (parseIntTotal < 0) {
+            errors.total = "Tổng sổ lượng không hợp lệ !";
+        }
+
+        if (!inputData.stock) {
+            errors.stock = "Vui lòng điền tổng số lượng tồn !";
+        }else if (parseIntStock < 0) {
+            errors.stock = "Số lượng tồn không hợp lệ !";
+        }
+
+        if (!inputData.description) {
+            errors.description = "Vui lòng điền mô tả !";
+        } else if (isTrueDescription) {
+            errors.description = "Mô tả không hợp lệ !";
+        }
+
+        if (!inputData.content) {
+            errors.content = "Vui lòng nhập nội dung!";
+        } else if (isTrueContent) {
+            errors.content = "Nội dung không hợp lệ !";
+        }
+
+        if (Object.keys(errors).length > 0) {
+            setErrorMessages(errors);
+        } else {
+            const displayServerError = (errorType, errorMessage) => {
+                const errors = { ...errorMessages };
+
+                switch (errorType) {
+                    case 'name':
+                        errors.email = errorMessage;
+                        break;
+                    case 'content':
+                        errors.content = errorMessage;
+                        break;
+                    case 'stock':
+                        errors.stock = errorMessage;
+                        break;
+                    case 'total':
+                        errors.total = errorMessage;
+                        break;
+                    case 'description':
+                        errors.description = errorMessage;
+                        break;
+                    // case 'description':
+                    //     errors.description = errorMessage;
+                    //     break;
+                    // case 'description':
+                    //     errors.description = errorMessage;
+                    //     break;
+                    // case 'auhthor_ids':
+                    //     errors.author_ids = errorMessage;
+                    //     break;
+                    default:
+                        errors.serverError = errorMessage;
+                        break;
                 }
-            });
+
+                setErrorMessages(errors);
+            };
+            updateBook(id, inputData)
+                .then(({ data }) => {
+                    if (data.data.status === "OK") {
+                        // navigate('/books');
+                        toast.success(data.data.message);
+                        setTimeout(() => navigate('/books'), 1400)
+                    } else if (data.data.status === "ERR") {
+                        displayServerError(data.data.type, data.data.message);
+
+                    }
+                })
+                .catch((error) => {
+                    if (error?.response?.data?.type) {
+                        displayServerError(
+                            error.response.data.type,
+                            error.response.data.message
+                        );
+                    }
+                });
+        }
     };
 
     return (
@@ -125,6 +234,9 @@ const UpdateBook = () => {
                                                         onChange={onChangeInput}
                                                         value={inputData?.name || ""}
                                                     />
+                                                    {errorMessages.name && (
+                                                        <p className="text-danger ml-3">{errorMessages.name}</p>
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="col-lg-12 form-group">
@@ -177,12 +289,14 @@ const UpdateBook = () => {
                                                         )
                                                     }
                                                 </div>
+                                                {errorMessages.author_ids && (
+                                                    <p className="text-danger ml-3">{errorMessages.author_ids}</p>
+                                                )}
                                             </div>
                                             <div className="col-lg-12 form-group">
 
                                                 <div className='row'>
                                                     <div className="col-lg-6 form-group">
-
 
                                                         <label for="inputState">Thể loại</label>
                                                         <select name="category_id" onChange={onChangeInput} id="inputState" className="form-control">
@@ -203,7 +317,9 @@ const UpdateBook = () => {
                                                                     </option>
                                                                 )
                                                             ))}
-
+                                                            {errorMessages.category_id && (
+                                                                <p className="text-danger ml-3">{errorMessages.category_id}</p>
+                                                            )}
                                                         </select>
                                                     </div>
                                                     <div className="col-lg-6 form-group">
@@ -217,6 +333,9 @@ const UpdateBook = () => {
                                                                 onChange={onChangeInput}
                                                                 value={inputData.year_creation}
                                                             />
+                                                            {errorMessages.year_creation && (
+                                                                <p className="text-danger ml-3">{errorMessages.year_creation}</p>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -233,6 +352,9 @@ const UpdateBook = () => {
                                                         onChange={onChangeInput}
                                                         value={inputData.description}
                                                     />
+                                                    {errorMessages.description && (
+                                                        <p className="text-danger ml-3">{errorMessages.description}</p>
+                                                    )}
                                                 </div>
                                             </div>
 
@@ -244,6 +366,9 @@ const UpdateBook = () => {
                                                     data={inputData?.content || ""}
                                                     onChange={onChangeEditor}
                                                 />
+                                                {errorMessages.content && (
+                                                    <p className="text-danger ml-3">{errorMessages.content}</p>
+                                                )}
                                             </div>
 
                                             <div className="col-lg-12 form-group">
@@ -260,6 +385,9 @@ const UpdateBook = () => {
                                                                 onChange={onChangeInput}
                                                                 value={inputData.total}
                                                             />
+                                                            {errorMessages.total && (
+                                                                <p className="text-danger ml-3">{errorMessages.total}</p>
+                                                            )}
                                                         </div>
                                                     </div>
                                                     <div className="col-lg-6 form-group">
@@ -273,6 +401,9 @@ const UpdateBook = () => {
                                                                 onChange={onChangeInput}
                                                                 value={inputData.stock}
                                                             />
+                                                            {errorMessages.stock && (
+                                                                <p className="text-danger ml-3">{errorMessages.stock}</p>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 </div>

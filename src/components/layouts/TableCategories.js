@@ -8,7 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 const TableCategories = () => {
     const navigate = useNavigate();
 
-    const [CategoryData, setCategoryData] = useState([]);
+    const [categoryData, setCategoryData] = useState([]);
+
+    const [categoryToDelete, setCategoryToDelete] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         // Lấy getEmployees
@@ -16,18 +19,33 @@ const TableCategories = () => {
             .then(({ data }) => setCategoryData(data.data));
     }, [])
 
-    //onClickDelete
-    const onClickDelete = (id) => {
-        deleteSoftCategory(id)
-            .then(({ data }) => {
-                if (data.status === "OK") {
-                    toast.success(data.message);
-                    setTimeout(() => window.location.reload(), 1000)
-                } else if (data.status === "ERR") {
-                    toast.error(data.message);
-                }
-            })
+    const onClickDelete = (category) => {
+        setCategoryToDelete(category);
+        setShowDeleteModal(true);
     }
+
+    const handleDelete = () => {
+        if (categoryToDelete) {
+            deleteSoftCategory(categoryToDelete._id)
+                .then(({ data }) => {
+                    if (data.status === "OK") {
+                        // Xóa thành công, cập nhật danh sách thể loại
+                        const updatedCategory = categoryData.filter(
+                            (category) => category._id !== categoryToDelete._id
+                        );
+                        setCategoryToDelete(updatedCategory);
+                        setShowDeleteModal(false);
+                        window.location.reload();
+                    } else if (data.status === "ERR") {
+                        alert(data.message);
+                    }
+                });
+        }
+    };
+
+    const handleCancelDelete = () => {
+        setShowDeleteModal(false);
+    };
 
     return (
         <>
@@ -61,7 +79,7 @@ const TableCategories = () => {
                                 </thead>
                                 <tbody>
                                     {
-                                        CategoryData.map((item, index) =>
+                                        categoryData.map((item, index) =>
                                             <tr key={index}>
                                                 <td>{item?.name}</td>
                                                 <td>{item?.description}</td>
@@ -71,7 +89,7 @@ const TableCategories = () => {
                                                     </Link>
                                                 </th>
                                                 <th className="text-center" >
-                                                    <a onClick={() => onClickDelete(item?._id)} >
+                                                    <a onClick={() => onClickDelete(item)} data-toggle="modal" data-target="#delete-modal" >
                                                         <i id="ic-trash" className="fa fa-trash" />
                                                     </a>
                                                 </th>
@@ -81,6 +99,30 @@ const TableCategories = () => {
                                 </tbody>
                             </table>
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {/* Modal delete */}
+            <div id="delete-modal" className="modal" tabIndex="-1" style={{ display: showDeleteModal ? "block" : "none" }}>
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Xóa thể loại sách</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={handleCancelDelete}>
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <p>Bạn có chắc chắn muốn xóa thể loại sách này?</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-danger" onClick={handleDelete}>
+                                Xóa
+                            </button>
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleCancelDelete}>
+                                Hủy
+                            </button>
                         </div>
                     </div>
                 </div>

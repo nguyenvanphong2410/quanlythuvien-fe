@@ -118,10 +118,10 @@ const AddAuthor = () => {
                     <div id="content">
                         <HeaderAdmin />
                         <div className="container-fluid">
-                            <div className='row'>
+                            <div className='row mt-5'>
                                 <div className='col-lg-3'></div>
                                 <div className='col-lg-6'>
-                                    <h2 className='text-center'>Thêm mới tác giả</h2>
+                                    <h2 className='text-center mb-5'>Thêm mới tác giả</h2>
                                     <form id="form-insert" className="">
                                         <div className='row'>
                                             <div className='col-lg-7'>

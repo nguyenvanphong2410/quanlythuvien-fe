@@ -12,9 +12,9 @@ const Login = () => {
     const [inputData, setInputData] = useState({});
     const [employeeData, setEmployeeData] = useState("");
     const [messageError, setMessageError] = useState("");
+    const [errorMessages, setErrorMessages] = useState({});
 
     const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
-
 
     //OnChangeInput
     const onChangeInput = (e) => {
@@ -23,6 +23,7 @@ const Login = () => {
             ...inputData,
             [name]: value,
         }));
+        setErrorMessages({ ...errorMessages, [name]: "" });
         console.log(inputData)
     };
 
@@ -31,14 +32,41 @@ const Login = () => {
 
         const isCheckEmail = reg.test(inputData.email);
 
-        // Kiểm tra email
-        if (!inputData.email || !inputData.password) {
-            console.log('trong nha may')
-            setMessageError('Vui lòng điền đầy đủ thông tin !')
+        const errors = {};
+
+        if (!inputData.email) {
+            errors.email = "Vui lòng nhập email !";
         } else if (!isCheckEmail) {
-            setMessageError('Email không hợp lệ !')
+            errors.email = "Email không hợp lệ !";
+        }
+
+        if (!inputData.password) {
+            errors.password = "Vui lòng nhập password !";
+        }
+
+        if (Object.keys(errors).length > 0) {
+            setErrorMessages(errors);
         } else {
-            // Gọi API login
+            const displayServerError = (errorType, errorMessage) => {
+                const errors = { ...errorMessages };
+
+                switch (errorType) {
+                    case 'email':
+                        errors.email = errorMessage;
+                        break;
+                    case 'password':
+                        errors.password = errorMessage;
+                        break;
+                    case 'lock':
+                        errors.email = errorMessage;
+                        break;
+                    default:
+                        errors.serverError = errorMessage;
+                        break;
+                }
+
+                setErrorMessages(errors);
+            };
             loginEmployee(inputData, {})
                 .then((data) => {
                     if (data.data.data.status === "OK") {
@@ -47,12 +75,18 @@ const Login = () => {
                         Cookies.set('access_token', data.data.data?.access_token, { expires: 7 });
                         navigate('/');
                     } else if (data.data.status === "ERR") {
-                        setMessageError(data.data.message)
+                        displayServerError(data.data.data.type, data.data.data.message);
                     }
                 })
-                .catch((data) => {
-                    setMessageError(data?.response?.data?.message)
-                })
+                .catch((error) => {
+                    console.log(error?.response?.data);
+                    if (error?.response?.data.type) {
+                        displayServerError(
+                            error.response?.data.type,
+                            error.response?.data.message
+                        );
+                    }
+                });
         }
     }
 
@@ -76,9 +110,7 @@ const Login = () => {
                                             <div className="text-center">
                                                 <h1 className="h4 text-gray-900 mb-4">Đănh nhập</h1>
                                             </div>
-                                            {messageError && (
-                                                <p className="text-danger text-center">{messageError}</p>
-                                            )}
+
                                             <form className="user">
                                                 <div className="form-group">
                                                     <input
@@ -90,6 +122,9 @@ const Login = () => {
                                                         placeholder="Email"
                                                     // value={inputData?.email || ""}
                                                     />
+                                                    {errorMessages.email && (
+                                                        <p className="text-danger ml-3">{errorMessages.email}</p>
+                                                    )}
                                                 </div>
                                                 <div className="form-group">
                                                     <input
@@ -100,8 +135,10 @@ const Login = () => {
                                                         onChange={onChangeInput}
                                                         placeholder="Mật khẩu"
                                                     // value={inputData?.password || ""}
-
                                                     />
+                                                    {errorMessages.password && (
+                                                        <p className="text-danger ml-3">{errorMessages.password}</p>
+                                                    )}
                                                 </div>
                                                 <div className="form-group">
                                                     <div className="custom-control custom-checkbox small">

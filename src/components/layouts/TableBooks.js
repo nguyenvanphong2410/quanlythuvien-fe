@@ -9,11 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 const TableAuthors = () => {
 
     const [booksData, setBookData] = useState([]);
-    const [authorsData, setAuthorsData] = useState([]);
     const [categoriesData, setCategoriesData] = useState([]);
-    const [inputData, setInputData] = useState({
-        author_ids: [], // Thêm một trường mới để lưu trữ author_ids
-    });
+    const [bookToDelete, setBookToDelete] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         // Lấy getAuthors
@@ -23,47 +21,39 @@ const TableAuthors = () => {
         getAllCategoriesBook({})
             .then(({ data }) => setCategoriesData(data.data));
 
-        getAuthors({})
-            .then(({ data }) => setAuthorsData(data.data));
+        // getAuthors({})
+        //     .then(({ data }) => setAuthorsData(data.data));
     }, [])
 
-    //handleOnChangeInputCreateBook
-    const onChangeInput = (e) => {
-        const { name, value, checked } = e.target;
+    const onClickDelete = (book) => {
+        setBookToDelete(book);
+        setShowDeleteModal(true);
+    };
 
-        if (name === "author_ids") {
-            // Nếu trường name là "author_ids", thực hiện xử lý riêng
-            let updatedAuthorIds = [...inputData.author_ids];
-
-            if (checked) {
-                // Nếu ô checkbox được chọn, thêm giá trị vào mảng
-                updatedAuthorIds.push(value);
-            } else {
-                // Nếu ô checkbox được bỏ chọn, loại bỏ giá trị khỏi mảng
-                updatedAuthorIds = updatedAuthorIds.filter((id) => id !== value);
-            }
-
-            setInputData({ ...inputData, author_ids: updatedAuthorIds });
-        } else {
-            // Xử lý các trường input khác như bình thường
-            setInputData({ ...inputData, [name]: value });
+    const handleDelete = () => {
+        if (bookToDelete) {
+            // Gọi API để xóa sách
+            deleteSoftBook(bookToDelete._id)
+                .then(({ data }) => {
+                    if (data.status === "OK") {
+                        // Xóa thành công, cập nhật danh sách tác giả
+                        const updatedBooks = booksData.filter(
+                            (book) => book._id !== bookToDelete._id
+                        );
+                        setBookData(updatedBooks);
+                        setShowDeleteModal(false);
+                        window.location.reload();
+                    } else if (data.status === "ERR") {
+                        // Hiển thị thông báo lỗi nếu cần
+                        alert(data.message);
+                    }
+                });
         }
-        console.log(inputData);
+    };
 
-    }
-
-    //onCLickDelete
-    const onClickDelete = (id) => {
-        deleteSoftBook(id)
-            .then(({ data }) => {
-                if (data.status === "OK") {
-                    toast.success(data.message);
-                    setTimeout(() => window.location.reload(), 1000)
-                } else if (data.status === "ERR") {
-                    toast.error(data.message);
-                }
-            })
-    }
+    const handleCancelDelete = () => {
+        setShowDeleteModal(false);
+    };
 
     return (
         <>
@@ -120,7 +110,11 @@ const TableAuthors = () => {
                                                     </Link>
                                                 </th>
                                                 <th className="text-center" >
-                                                    <a onClick={() => onClickDelete(item._id)} data-toggle="modal" data-target="#delete-modal">
+                                                    <a
+                                                        onClick={() => onClickDelete(item)}
+                                                        data-toggle="modal"
+                                                        data-target="#delete-modal"
+                                                    >
                                                         <i id="ic-trash" className="fa fa-trash" />
                                                     </a>
                                                 </th>
@@ -134,6 +128,52 @@ const TableAuthors = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Modal delete */}
+            <div
+                id="delete-modal"
+                className="modal"
+                tabIndex="-1"
+                style={{ display: showDeleteModal ? "block" : "none" }}
+            >
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title">Xóa sách</h5>
+                            <button
+                                type="button"
+                                className="close"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                onClick={handleCancelDelete}
+                            >
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <p>Bạn có chắc chắn muốn xóa sách này?</p>
+                        </div>
+                        <div className="modal-footer">
+                            <button
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={handleDelete}
+                            >
+                                Xóa
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-secondary"
+                                data-dismiss="modal"
+                                onClick={handleCancelDelete}
+                            >
+                                Hủy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
 
         </>
     )

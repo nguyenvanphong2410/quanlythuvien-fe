@@ -7,6 +7,7 @@ const TableEmployees = () => {
     const navigate = useNavigate();
 
     const [employeesData, setEmployeesData] = useState([]);
+    
     const [employeeToDelete, setEmployeeToDelete] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
