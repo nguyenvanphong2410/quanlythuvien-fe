@@ -1,20 +1,22 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { logoutEmployee } from "../../services/Api";
+import { getEmployeeDetails, logoutEmployee } from "../../services/Api";
 import Cookies from 'js-cookie';
 import jwt_decode from "jwt-decode";
 // import { Redirect } from "react-router-dom";
+import axios from "axios";
 
 const HeaderAdmin = () => {
+
     const navigate = useNavigate();
 
     // Lấy token 
-    const token = Cookies.get('access_token');
+    const token = Cookies.get('token');
 
     if (token) {
         const decode = jwt_decode(token);
-        // console.log('decode login là: ', decode.payload.name)
-        var nameUser = decode?.payload.name || "";
+        // console.log('decode login là: ', decode)
+        var nameUser = decode?.email || "";
     }
 
     //  kiểm tra token 
@@ -25,14 +27,22 @@ const HeaderAdmin = () => {
     } else if (!token) {
         // navigate('/login');
         window.location.href = '/login';
-        // <Redirect to='/login' />
     }
 
-    const handleOnClickLogout = () => {
-        Cookies.remove('access_token');
+    const handleOnClickLogout = async() => {
+        await logoutEmployee({}, {
+            headers: {
+                authorization: `Bearer ${token}`,
+            }
+        })
+        .then(() => { })
+        .catch((error) => {
+            console.log('errdata', error?.response?.data);
+        })
         console.log('log dang xuat')
+        Cookies.remove('token');
         navigate('/')
-        logoutEmployee().then(() => { });
+
     }
     return (
         <>

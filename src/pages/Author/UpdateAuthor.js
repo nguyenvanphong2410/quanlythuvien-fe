@@ -36,7 +36,6 @@ const UpdateAuthor = () => {
     useEffect(() => {
         getAuthorDetails(id)
             .then(({ data }) => {
-                // setAuthorDetailsData(data.data);
                 setInputData({
                     name: data.data?.name || "",
                     date_of_birth: moment(data.data?.date_of_birth).format('YYYY-MM-DD') || "",

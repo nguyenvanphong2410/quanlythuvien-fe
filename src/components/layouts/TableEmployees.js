@@ -3,11 +3,14 @@ import { getEmployees } from "../../services/Api";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteSoftEmployee } from "../../services/Api";
 
+import { Slide, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const TableEmployees = () => {
     const navigate = useNavigate();
 
     const [employeesData, setEmployeesData] = useState([]);
-    
+
     const [employeeToDelete, setEmployeeToDelete] = useState(null);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
@@ -26,16 +29,16 @@ const TableEmployees = () => {
         if (employeeToDelete) {
             deleteSoftEmployee(employeeToDelete._id)
                 .then(({ data }) => {
-                    if (data.status === "OK") {
+                    console.log('data xoa', data)
+                    if (data.message === "Success") {
                         // Xóa thành công, cập nhật danh sách nhân viên
                         const updatedEmployees = employeesData.filter(
                             (employee) => employee._id !== employeeToDelete._id
                         );
                         setEmployeesData(updatedEmployees);
-                        setShowDeleteModal(false);
-                        window.location.reload();
-                    } else if (data.status === "ERR") {
-                        alert(data.message);
+                        toast.success(data?.data?.message);
+                    } else if (data.message === "Error") {
+                        toast.error(data?.data?.message);
                     }
                 });
         }
@@ -48,6 +51,12 @@ const TableEmployees = () => {
     return (
         <>
             <div className="container-fluid">
+                <ToastContainer 
+                    transition={Slide} 
+                    autoClose={1500}
+                    hideProgressBar={false}
+                />
+
                 {/* Page Heading */}
                 <div className="d-sm-flex align-items-center justify-content-between">
                     <h2 className="">Nhân viên</h2>
@@ -112,7 +121,7 @@ const TableEmployees = () => {
                             <p>Bạn có chắc chắn muốn xóa nhân viên này?</p>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" onClick={handleDelete}>
+                            <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={handleDelete}>
                                 Xóa
                             </button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleCancelDelete}>

@@ -27,7 +27,6 @@ const AuthorDetails = () => {
                     <div id="content">
                         <HeaderAdmin />
                         <div className="container-fluid">
-
                             <div className="row">
                                 <div className="col-lg-3"></div>
                                 <div className="col-lg-6">
@@ -55,16 +54,17 @@ const AuthorDetails = () => {
                                     </div>
                                 </div>
                                 <div className="col-lg-3"></div>
+                                <div className="ml-5">
+                                    <h2 className="section-heading text-dark">Tiểu sử</h2>
+                                    <p className="text-justify">
+                                        <div dangerouslySetInnerHTML={{ __html: `${authorDetailsData?.story}` }} />
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="ml-5">
-                        <h2 className="section-heading text-dark">Tiểu sử</h2>
-                        <p className="text-justify">
-                            <div dangerouslySetInnerHTML={{ __html: `${authorDetailsData?.story}` }} />
-                        </p>
-                    </div>
+
                 </div>
             </div>
 

@@ -26,7 +26,7 @@ const AddBook = () => {
     const hasNumber = /\d/;
     const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
     const specialCharsDescription = /[$%^&*_\[\]{}|]+/;
-    const specialCharsContent = /[$%^&*_\[\]{}|]+/;
+    const specialCharsContent = /[$%^&*\[\]{}|]+/;
 
 
     useEffect(() => {

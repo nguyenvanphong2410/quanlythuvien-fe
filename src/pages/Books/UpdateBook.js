@@ -31,7 +31,7 @@ const UpdateBook = () => {
     });
     const [errorMessages, setErrorMessages] = useState({});
 
-
+    console.log(inputData)
     const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
     const specialCharsDescription = /[$%^&*_\[\]{}|]+/;
     const specialCharsContent = /[$%^&*_\[\]{}|]+/;
@@ -68,13 +68,13 @@ const UpdateBook = () => {
             setInputData(prevInput => ({
                 ...prevInput,
                 author_ids: checked
-                    ? [...prevInput.author_ids, value] // Thêm giá trị vào mảng
-                    : prevInput.author_ids.filter(id => id !== value) // Loại bỏ giá trị khỏi mảng
+                    ? [...prevInput.author_ids, {_id:value}] // Thêm giá trị vào mảng
+                    :prevInput.author_ids.filter(item => item._id !== value)  // Loại bỏ giá trị khỏi mảng
             }));
         } else {
             setInputData(prevInput => ({
                 ...prevInput,
-                [name]: value
+                [name]: value,
             }));
         }
         setErrorMessages({ ...errorMessages, [name]: "" });
@@ -275,7 +275,7 @@ const UpdateBook = () => {
                                                                     className="ml-4"
                                                                     type="checkbox"
                                                                     onChange={onChangeInput}
-                                                                    checked={
+                                                                    checked={ 
                                                                         inputData?.author_ids.some(
                                                                             (itemId) => itemId?._id === item?._id
                                                                         ) || null

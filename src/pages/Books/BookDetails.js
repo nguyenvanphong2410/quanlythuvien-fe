@@ -59,13 +59,13 @@ const BookDetails = () => {
                                     </div>
                                 </div>
                                 <div className="col-lg-3"></div>
+                                <div className="ml-5 mr-5">
+                                    <h2 className="section-heading text-dark">Nội dung </h2>
+                                    <div className="text-justify">
+                                        <div dangerouslySetInnerHTML={{ __html: `${bookDetailsData?.content}` }} />
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="ml-5">
-                        <h2 className="section-heading text-dark">Nội dung </h2>
-                        <div className="text-justify">
-                            <div dangerouslySetInnerHTML={{ __html: `${bookDetailsData?.content}` }} />
                         </div>
                     </div>
                 </div>

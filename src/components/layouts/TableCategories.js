@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { deleteSoftCategory, getAllCategoriesBook } from "../../services/Api";
 import { Link, useNavigate } from "react-router-dom";
 
-import { ToastContainer, toast } from 'react-toastify';
+import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const TableCategories = () => {
@@ -28,18 +28,20 @@ const TableCategories = () => {
         if (categoryToDelete) {
             deleteSoftCategory(categoryToDelete._id)
                 .then(({ data }) => {
-                    if (data.status === "OK") {
+                    if (data.message === "Success") {
                         // Xóa thành công, cập nhật danh sách thể loại
                         const updatedCategory = categoryData.filter(
                             (category) => category._id !== categoryToDelete._id
                         );
                         setCategoryToDelete(updatedCategory);
-                        setShowDeleteModal(false);
-                        window.location.reload();
-                    } else if (data.status === "ERR") {
-                        alert(data.message);
+                        toast.success(data?.data?.message);
+                    } 
+                })
+                .catch((data)=> {
+                    if (data.error === true) {
+                        toast.error(data?.data?.message);
                     }
-                });
+                })
         }
     };
 
@@ -51,7 +53,11 @@ const TableCategories = () => {
         <>
             <div className="container-fluid">
 
-                <ToastContainer />
+                <ToastContainer
+                    transition={Slide}
+                    autoClose={1500}
+                    hideProgressBar={false}
+                />
                 {/* Page Heading */}
                 <div className="d-sm-flex align-items-center justify-content-between">
                     <h2 className="">Thể loại sách </h2>
@@ -117,7 +123,7 @@ const TableCategories = () => {
                             <p>Bạn có chắc chắn muốn xóa thể loại sách này?</p>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-danger" onClick={handleDelete}>
+                            <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={handleDelete}>
                                 Xóa
                             </button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={handleCancelDelete}>

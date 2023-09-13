@@ -1,18 +1,25 @@
 import Http from "./Http";
+import Cookies from 'js-cookie';
 
+// Lấy token 
+const token = Cookies.get('token');
+console.log('log day nha :', token);
 //API --- Nhân viên
 export const loginEmployee = (data) => {
     return Http.post("auth/login", data);
 }
-export const logoutEmployee = () => {
-    return Http.get("auth/logout");
+
+export const logoutEmployee = ({}, config) => {
+
+    return Http.post("auth/logout", {}, config);
 }
+
 export const getInfo = (data) => {
     return Http.post("employee/get-info", data);
 }
 
-export const createEmployee = (data, config) => {
-    return Http.post("employee/sign-up", data, config);
+export const createEmployee = (config) => {
+    return Http.post("employee/sign-up", config);
 }
 
 export const getEmployees = (data,) => {

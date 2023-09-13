@@ -6,21 +6,7 @@ import { useNavigate } from 'react-router';
 
 const DefaultComponent = () => {
 
-    // const navigate = useNavigate();
-
-
-    // // Lấy token 
-    // const token = Cookies.get('access_token');
-    // //  kiểm tra token 
-    // if (token && !sessionStorage.getItem('tokenChecked')) {
-    //     sessionStorage.setItem('tokenChecked', 'true');
-    //     window.location.href = '/';
-    //     // navigate('/')
-    // } else if (!token) {
-    //     // window.location.href = '/login';
-    //     navigate('/login')
-
-    // }
+   
     return (
         <>
             {/* Page Wrapper */}

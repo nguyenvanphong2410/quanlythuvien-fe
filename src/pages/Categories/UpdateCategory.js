@@ -23,6 +23,10 @@ const UpdateCategory = () => {
         name: "",
         description: "",
     });
+    const [errorMessages, setErrorMessages] = useState({});
+
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+    const specialCharsDescription = /[$%^&*_\[\]{}|]+/;
 
     useEffect(() => {
         getDetailsCategory(id)
@@ -44,26 +48,77 @@ const UpdateCategory = () => {
             [name]: value
         }));
         console.log(inputData)
+        setErrorMessages({ ...errorMessages, [name]: "" });
+        console.log(inputData)
     };
 
     const onCLickUpdate = (e) => {
         e.preventDefault();
-        updateCategory(id, inputData)
-            .then(({ data }) => {
-                if (data?.status === "OK") {
-                    toast.success(data.message);
-                    setTimeout(() => navigate('/categories'), 1400)
-                } else if (data?.status === "ERR") {
-                    toast.error(data?.message);
+
+        const isTrueName = specialChars.test(inputData.name);
+        const isTrueDescription = specialCharsDescription.test(inputData.description)
+
+        const errors = {};
+
+        if (!inputData.name) {
+            errors.name = "Vui lòng nhập họ tên !";
+        } else if (isTrueName) {
+            errors.name = "Tên thể loại sách không hợp lệ !";
+        }
+
+        if (!inputData.description) {
+            errors.description = "Vui lòng điền mô tả !";
+        } else if (isTrueDescription) {
+            errors.description = "Mô tả không hợp lệ !";
+        }
+
+        if (Object.keys(errors).length > 0) {
+            setErrorMessages(errors);
+        } else {
+            const displayServerError = (errorType, errorMessage) => {
+                const errors = { ...errorMessages };
+
+                switch (errorType) {
+                    case 'null':
+                        errors.name = errorMessage;
+                        errors.description = errorMessage;
+                        break;
+                    case 'name':
+                        errors.name = errorMessage;
+                        break;
+                    case 'description':
+                        errors.description = errorMessage;
+                        break;
                 }
-            });
+
+                setErrorMessages(errors);
+            };
+
+            updateCategory(id, inputData)
+                .then(({ data }) => {
+                    if (data?.data?.status === "OK") {
+                        toast.success(data?.data?.message);
+                        setTimeout(() => navigate('/categories'), 1400)
+                    } else if (data?.data.status === "ERR") {
+                        toast.error(data?.data.message);
+                    }
+                })
+                .catch((error) => {
+                    if (error?.response?.data?.type) {
+                        displayServerError(
+                            error.response.data.type,
+                            error.response.data.message
+                        );
+                    }
+                });
+        }
     }
 
 
     return (
         <>
             <div id="wrapper">
-            <ToastContainer transition={Slide} />
+                <ToastContainer transition={Slide} />
                 <Sidebar />
                 <div id="content-wrapper" className="d-flex flex-column">
                     <div id="content">
@@ -88,6 +143,9 @@ const UpdateCategory = () => {
                                                         onChange={onChangeInput}
                                                         value={inputData.name}
                                                     />
+                                                      {errorMessages.name && (
+                                                        <p className="text-danger ml-3">{errorMessages.name}</p>
+                                                    )}
                                                 </div>
                                                 <div className="form-group">
                                                     <label >Mô tả</label>
@@ -100,6 +158,9 @@ const UpdateCategory = () => {
                                                         onChange={onChangeInput}
                                                         value={inputData.description}
                                                     />
+                                                     {errorMessages.description && (
+                                                        <p className="text-danger ml-3">{errorMessages.description}</p>
+                                                    )}
                                                 </div>
                                             </div>
                                         </div>

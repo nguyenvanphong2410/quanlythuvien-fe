@@ -69,12 +69,13 @@ const Login = () => {
             };
             loginEmployee(inputData, {})
                 .then((data) => {
-                    if (data.data.data.status === "OK") {
-                        console.log('data', data.data)
+                    if (data.data?.status === 200) {
+                        console.log('data', data.data?.data?.token)
                         // Lưu token vào cookie, hết hạn 7 ngày
-                        Cookies.set('access_token', data.data.data?.access_token, { expires: 7 });
+                        Cookies.set('token', data.data?.data?.token, { expires: 7 });
                         navigate('/');
-                    } else if (data.data.status === "ERR") {
+                    } 
+                    else if (data.data.status === "ERR") {
                         displayServerError(data.data.data.type, data.data.data.message);
                     }
                 })

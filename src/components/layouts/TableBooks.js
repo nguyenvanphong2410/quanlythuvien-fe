@@ -3,7 +3,7 @@ import { createBooks, deleteSoftBook, getAllCategoriesBook, getAuthors, getBooks
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import { ToastContainer, toast } from 'react-toastify';
+import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const TableAuthors = () => {
@@ -35,17 +35,15 @@ const TableAuthors = () => {
             // Gọi API để xóa sách
             deleteSoftBook(bookToDelete._id)
                 .then(({ data }) => {
-                    if (data.status === "OK") {
+                    if (data.message === "Success") {
                         // Xóa thành công, cập nhật danh sách tác giả
                         const updatedBooks = booksData.filter(
                             (book) => book._id !== bookToDelete._id
                         );
                         setBookData(updatedBooks);
-                        setShowDeleteModal(false);
-                        window.location.reload();
-                    } else if (data.status === "ERR") {
-                        // Hiển thị thông báo lỗi nếu cần
-                        alert(data.message);
+                        toast.success(data?.data?.message);
+                    } else if (data.message === "Error") {
+                        toast.error(data?.data?.message);
                     }
                 });
         }
@@ -59,7 +57,11 @@ const TableAuthors = () => {
         <>
             <div className="container-fluid">
 
-                <ToastContainer />
+                <ToastContainer
+                    transition={Slide}
+                    autoClose={1500}
+                    hideProgressBar={false}
+                />
                 {/* Page Heading */}
                 <div className="d-sm-flex align-items-center justify-content-between">
                     <h2 className="">Sách</h2>
@@ -158,6 +160,7 @@ const TableAuthors = () => {
                                 type="button"
                                 className="btn btn-danger"
                                 onClick={handleDelete}
+                                data-dismiss="modal"
                             >
                                 Xóa
                             </button>

@@ -3,7 +3,7 @@ import { createAuthors, deleteSoftAuthor, getAuthors } from "../../services/Api"
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment";
 
-import { ToastContainer, toast } from 'react-toastify';
+import { Slide, ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const TableAuthors = () => {
@@ -23,19 +23,6 @@ const TableAuthors = () => {
             .then(({ data }) => setAuthorData(data.data));
     }, [])
 
-    // //onCLickDelete
-    // const onClickDelete = (id) => {
-    //     deleteSoftAuthor(id)
-    //         .then(({ data }) => {
-    //             if (data.status === "OK") {
-    //                 toast.success(data.message);
-    //                 setTimeout(() => window.location.reload(), 1000)
-    //             } else if (data.status === "ERR") {
-    //                 toast.error(data.message);
-    //             }
-    //         })
-    // }
-
     const onClickDelete = (author) => {
         setAuthorToDelete(author);
         setShowDeleteModal(true);
@@ -46,17 +33,16 @@ const TableAuthors = () => {
             // Gọi API để xóa tác giả
             deleteSoftAuthor(authorToDelete._id)
                 .then(({ data }) => {
-                    if (data.status === "OK") {
+                    if (data.message === "Success") {
                         // Xóa thành công, cập nhật danh sách tác giả
                         const updatedAuthors = authorsData.filter(
                             (author) => author._id !== authorToDelete._id
                         );
                         setAuthorData(updatedAuthors);
-                        setShowDeleteModal(false);
-                        window.location.reload();
-                    } else if (data.status === "ERR") {
-                        // Hiển thị thông báo lỗi nếu cần
-                        alert(data.message);
+                        toast.success(data?.data?.message);
+                    } else if (data.message === "Error") {
+                        toast.error(data?.data?.message);
+
                     }
                 });
         }
@@ -68,8 +54,12 @@ const TableAuthors = () => {
 
     return (
         <>
-            <ToastContainer />
             <div className="container-fluid">
+                <ToastContainer
+                    transition={Slide}
+                    autoClose={1500}
+                    hideProgressBar={false}
+                />
                 <div className="d-sm-flex align-items-center justify-content-between">
                     <h2 className="">Tác Giả</h2>
                 </div>
@@ -162,6 +152,7 @@ const TableAuthors = () => {
                                     type="button"
                                     className="btn btn-danger"
                                     onClick={handleDelete}
+                                    data-dismiss="modal"
                                 >
                                     Xóa
                                 </button>
